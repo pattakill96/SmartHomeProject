@@ -1,0 +1,45 @@
+Bridge mqtt:broker:mybroker "Broker MQTT" [ host="localhost", port=1883, secure=false, username="xxxxxxx", password="xxxxxxx" ]
+{
+    Thing topic kitchen "Kitchen" @ "Smart Home"
+    {
+        Channels:
+            Type switch : gas "KitchenGas" [stateTopic="home/kitchen/gasknob/ON", transformationPattern="JSONPATH:$.home.kitchen.gasknob", commandTopic="home/kitchen/gasknob"]
+            Type switch : water "KitchenWater" [stateTopic="home/kitchen/water/ON", transformationPattern="JSONPATH:$.home.kitchen.water", commandTopic="home/kitchen/water"]
+            Type switch : window "KitchenWindow" [stateTopic="home/kitchen/window/ON", transformationPattern="JSONPATH:$.home.kitchen.window", commandTopic="home/kitchen/window"]
+            Type switch : fire "KitchenFire" [stateTopic="home/kitchen/fire/ON", transformationPattern="JSONPATH:$.home.kitchen.fire", commandTopic="home/kitchen/fire"]
+            Type number : temp "KitchenTemp" [stateTopic="home/kitchen/temperature", transformationPattern="JSONPATH:$.home.kitchen.temperature", unit="°C"]
+            Type switch : sprink "KitchenSprink" [stateTopic="home/kitchen/sprink/ON", transformationPattern="JSONPATH:$.home.kitchen.sprink", commandTopic="home/kitchen/sprink"]
+            Type number : gasP "KitchenGasPerc" [stateTopic="home/kitchen/gasPerc", transformationPattern="JSONPATH:$.home.kitchen.gasPerc", unit="‰"]
+    }
+
+    Thing topic bathroom "Bathroom" @ "Smart Home"
+    {
+        Channels:
+            Type switch : water "BathroomWater" [stateTopic="home/bathroom/water/ON", transformationPattern="JSONPATH:$.home.bathroom.water", commandTopic="home/bathroom/water"]
+            Type switch : window "BathroomWindow" [stateTopic="home/bathroom/window/ON", transformationPattern="JSONPATH:$.home.bathroom.window", commandTopic="home/bathroom/window"]
+            Type switch : fire "BathroomFire" [stateTopic="home/bathroom/fire/ON", transformationPattern="JSONPATH:$.home.bathroom.fire", commandTopic="home/bathroom/fire"]
+            Type number : temp "BathroomTemp" [stateTopic="home/bathroom/temperature", transformationPattern="JSONPATH:$.home.bathroom.temperature", unit="°C"]
+            Type switch : sprink "BathroomSprink" [stateTopic="home/bathroom/sprink/ON", transformationPattern="JSONPATH:$.home.bathroom.sprink", commandTopic="home/bathroom/sprink"]
+            
+    }
+
+    Thing topic bedroom "Bedroom" @ "Smart Home"
+    {
+        Channels:
+            Type switch : window "BedroomWindow" [stateTopic="home/bedroom/window/ON", transformationPattern="JSONPATH:$.home.bedroom.window", commandTopic="home/bedroom/window"]
+            Type switch : fire "BedroomFire" [stateTopic="home/bedroom/fire/ON", transformationPattern="JSONPATH:$.home.bedroom.fire", commandTopic="home/bedroom/fire"]
+            Type number : temp "BedroomTemp" [stateTopic="home/bedroom/temperature", transformationPattern="JSONPATH:$.home.bedroom.temperature", unit="°C"]
+            Type switch : sprink "BedroomSprink" [stateTopic="home/bedroom/sprink/ON", transformationPattern="JSONPATH:$.home.bedroom.sprink", commandTopic="home/bedroom/sprink"]
+            
+    }
+
+    Thing topic livingroom "Livingroom" @ "Smart Home"
+    {
+        Channels:
+            Type switch : window "LivingroomWindow" [stateTopic="home/livingroom/window/ON", transformationPattern="JSONPATH:$.home.livingroom.window", commandTopic="home/livingroom/window"]
+            Type switch : fire "LivingroomFire" [stateTopic="home/livingroom/fire/ON", transformationPattern="JSONPATH:$.home.livingroom.fire", commandTopic="home/livingroom/fire"]
+            Type number : temp "LivingroomTemp" [stateTopic="home/livingroom/temperature", transformationPattern="JSONPATH:$.home.livingroom.temperature", unit="°C"]
+            Type switch : sprink "LivingroomSprink" [stateTopic="home/livingroom/sprink/ON", transformationPattern="JSONPATH:$.home.livingroom.sprink", commandTopic="home/livingroom/sprink"]
+            
+    }
+}

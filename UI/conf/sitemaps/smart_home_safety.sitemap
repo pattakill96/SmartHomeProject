@@ -1,0 +1,48 @@
+sitemap smart_home_safety label="Smart Home Safety" {
+    Frame {
+        Group item=Bedroom
+        Group item=Kitchen
+        Group item=Bathroom
+        Group item=LivingRoom
+    }
+
+    Frame {
+        Text label="Window" icon="window" {
+            Default item=Bedroom_Window label="Bedroom"
+            Default item=Kitchen_Window label="Kitchen"
+            Default item=Bathroom_Window label="Bathroom"
+            Default item=LivingRoom_Window label="Living Room"
+        }
+
+        Text label="Sprinkler" icon="rain" {
+            Default item=Bedroom_Sprinkler label="Bedroom"
+            Default item=Kitchen_Sprinkler label="Kitchen"
+            Default item=Bathroom_Sprinkler label="Bathroom"
+            Default item=LivingRoom_Sprinkler label="Living Room"
+        }
+
+        Text label="Water" icon="flow" {
+            Default item=Kitchen_Water label="Kitchen"
+            Default item=Bathroom_Water label="Bathroom"
+        }
+
+        Text label="Temperature" icon="temperature" {
+            Text item=Bedroom_Temperature label="Bedroom [%.1f °C]" valuecolor=[>35="orange",>14="green",<=14="blue"]
+            Text item=Kitchen_Temperature label="Kitchen [%.1f °C]"  valuecolor=[>35="orange",>14="green",<=14="blue"]
+            Text item=Bathroom_Temperature label="Bathroom [%.1f °C]" valuecolor=[>35="orange",>14="green",<=14="blue"]
+            Text item=LivingRoom_Temperature label="Living Room [%.1f °C]" valuecolor=[>35="orange",>14="green",<=14="blue"]
+        }
+
+        Text label="Fire" icon="fire" {
+            Default item=Bedroom_Fire label="Bedroom"
+            Default item=Kitchen_Fire label="Kitchen"
+            Default item=Bathroom_Fire label="Bathroom"
+            Default item=LivingRoom_Fire label="Living Room"
+        }
+
+        Text label="Gas" icon="gas" {
+            Default item=Kitchen_Gas label="Kitchen Gas Knob"
+            Text item= Kitchen_GasPerc label="Kitchen Gas Percentage [%.3f ‰]" valuecolor=[>0.8="red",<=0.8="green"] 
+        }
+    }
+}

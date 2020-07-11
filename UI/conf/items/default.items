@@ -1,0 +1,37 @@
+Group     Home                     "Smart Home Safety"   <house>                                      ["Building"]
+
+Group     GF                       "Ground Floor"        <groundfloor>   (Home)                       ["GroundFloor"]
+
+Group     Bedroom                  "Bedroom"             <bedroom>       (Home)                       ["Bedroom"]
+Group     Kitchen                  "Kitchen"             <kitchen>       (Home)                       ["Kitchen"]
+Group     Bathroom                 "Bathroom"            <bath>          (Home)                       ["Bathroom"]
+Group     LivingRoom               "Living Room"         <sofa>          (Home)                       ["LivingRoom"]
+
+Switch   Bedroom_Window           "Window"              <window>        (Bedroom, gWindow)           ["Switchable"]     {channel="mqtt:topic:mybroker:bedroom:window"}              
+Switch    Bedroom_Sprinkler        "Sprinkler"           <rain>   (Bedroom, gSprinkler)              ["Switchable"]     {channel="mqtt:topic:mybroker:bedroom:sprink"}
+Switch    Bedroom_Fire             "Fire"                <fire>          (Bedroom, gFire)            ["Switchable"]     {channel="mqtt:topic:mybroker:bedroom:fire"}
+Number    Bedroom_Temperature      "Temperature"         <temperature>   (Bedroom, gTemperature)      ["Temperature"]   {channel="mqtt:topic:mybroker:bedroom:temp"}          
+Switch   Kitchen_Window           "Window"              <window>        (Kitchen, gWindow)           ["Switchable"]     {channel="mqtt:topic:mybroker:kitchen:window"}                
+Switch    Kitchen_Sprinkler        "Sprinkler"           <rain>   (Kitchen, gSprinkler)              ["Switchable"]     {channel="mqtt:topic:mybroker:kitchen:sprink"}          
+Switch    Kitchen_Water           "Water"     <faucet>          (Kitchen, gWater)           ["Switchable"]                {channel="mqtt:topic:mybroker:kitchen:water"}
+Number    Kitchen_Temperature      "Temperature"         <temperature>   (Kitchen, gTemperature)      ["Temperature"]   {channel="mqtt:topic:mybroker:kitchen:temp"}
+Number    Kitchen_GasPerc      "GasPercentage"         <smoke>   (Kitchen, gGasPerc)      ["Percentage"]   {channel="mqtt:topic:mybroker:kitchen:gasP"}         
+Switch    Kitchen_Fire             "Fire"                <fire>         (Kitchen, gLight)            ["Switchable"]     {channel="mqtt:topic:mybroker:kitchen:fire"}
+Switch    Kitchen_Gas            "Gas"        <gas>   (Kitchen, gGas)            ["Switchable"]                         {channel="mqtt:topic:mybroker:kitchen:gas"}
+Switch   Bathroom_Window          "Window"              <window>        (Bathroom, gWindow)          ["Switchable"]     {channel="mqtt:topic:mybroker:bathroom:window"}              
+Switch    Bathroom_Sprinkler        "Sprinkler"           <rain>   (Bathroom, gSprinkler)             ["Switchable"]    {channel="mqtt:topic:mybroker:bathroom:sprink"}
+Switch    Bathroom_Water          "Water"     <faucet>          (Bathroom, gWater)          ["Switchable"]                {channel="mqtt:topic:mybroker:bathroom:water"}
+Switch    Bathroom_Fire             "Fire"                <fire>         (Bathroom, gLight)           ["Switchable"]    {channel="mqtt:topic:mybroker:bathroom:fire"}
+Number    Bathroom_Temperature     "Temperature"         <temperature>   (Bathroom, gTemperature)     ["Temperature"]   {channel="mqtt:topic:mybroker:bathroom:temp"}
+Switch   LivingRoom_Window        "Window"              <window>        (LivingRoom, gWindow)        ["Switchable"]     {channel="mqtt:topic:mybroker:livingroom:window"}              
+Switch    LivingRoom_Sprinkler        "Sprinkler"           <rain>   (LivingRoom, gSprinkler)           ["Switchable"]  {channel="mqtt:topic:mybroker:livingroom:sprink"}             
+Switch    LivingRoom_Fire             "Fire"                <fire>         (LivingRoom, gLight)         ["Switchable"]  {channel="mqtt:topic:mybroker:livingroom:fire"} 
+Number    LivingRoom_Temperature   "Temperature"         <temperature>   (LivingRoom, gTemperature)   ["Temperature"]   {channel="mqtt:topic:mybroker:livingroom:temp"}           
+
+Group:Switch:OR(ON, OFF)   gWindow        "Switchable"            <window>        (Home)   ["Switchable"]
+Group:Switch:OR(ON, OFF)         gSprinkler           "Sprinkler"               <rain>   (Home)   ["Switchable"]
+Group:Switch:OR(ON, OFF)         gWater        "Water"   <flow>          (Home)   ["Switchable"]
+Group:Number:AVG                 gTemperature   "Temperature"       <temperature>   (Home)   ["Temperature"]
+Group:Switch:OR(ON, OFF)         gFire         "Fire"             <fire>         (Home)   ["Switchable"]
+Group:Switch:OR(ON, OFF)         gGas         "Gas"      <gas>   (Home)   ["Switchable"]
+Group:Number:AVG            gGasPerc   "GasPerc"   <smoke> (Home) ["Percentage"]

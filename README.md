@@ -1,7 +1,7 @@
 # SmartHomeProject
  First of all start MQTT service in your machine.
  To run the application clone the repository in your computer and:
-  - Open the **smart.home.safety** part in Eclipse and add in the **Build Path** the library that you can find in the **lib/**folder
+  - Open the **smart.home.safety** part in Eclipse and add in the **Build Path** the library that you can find in the **lib/** folder
 	 > Once completed you can start the application running the **MainFunction.java**
 
 

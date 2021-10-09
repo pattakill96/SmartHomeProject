@@ -99,8 +99,8 @@ k=1
 while(k):
     c.publish(kitchen.getTopic(),kitchen.getRaiseMessage())
     #c.publish(kitchen.getTopic(), kitchen.getRaiseMessage())
-    c.publish(kitchenGas.getTopic(),kitchenGas.getMessage())
-    #c.publish(kitchenGas.getTopic(), kitchenGas.getRaiseMessage())
+    #c.publish(kitchenGas.getTopic(),kitchenGas.getMessage())
+    c.publish(kitchenGas.getTopic(), kitchenGas.getRaiseMessage())
     c.publish(bathroom.getTopic(), bathroom.getMessage())
     c.publish(livingroom.getTopic(), livingroom.getMessage())
     c.publish(bedroom.getTopic(), bedroom.getMessage())

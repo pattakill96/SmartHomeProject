@@ -6,7 +6,7 @@ public class Analyzer {
 	
 	public void GasSensorArrived(String room, int state) {
 		this.updateData(room, state, 999, "gasknob");
-		int time_lapse = 60;
+		int time_lapse = 20;
 		planner.gasSignalArrived(time_lapse);
 	}
 	

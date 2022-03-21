@@ -7,6 +7,8 @@ public class SensorValues {
 	public static int gas_sensor_value;
 	public static float  gas_sensor_perc; 
 	
+	public static int gas_timer = 5;
+	
 	
 	public static int kitchen_fire_sensor_value;
 	public static int livingroom_fire_sensor_value;
@@ -31,10 +33,24 @@ public class SensorValues {
 	public static int livingroom_window_sensor_value;
 	public static int bedroom_window_sensor_value;
 	public static int bathroom_window_sensor_value;
+	
+	public static int kitchen_door_sensor_value;
+	public static int livingroom_door_sensor_value;
+	public static int bedroom_door_sensor_value;
+	public static int bathroom_door_sensor_value;
+	
+	public static int kitchen_presence_value;
+	public static int livingroom_presence_value;
+	public static int bedroom_presence_value;
+	public static int bathroom_presence_value;
 
 	
 	public void updateGasSensorValue (int state) {
 		gas_sensor_value = state;
+	}
+	
+	public void updateGasTimer (int state) {
+		gas_timer = state;
 	}
 	
 	public void updateGasSensorPercValue (float value) {
@@ -65,6 +81,37 @@ public class SensorValues {
 		livingroom_sprink_sensor_value=state;
 	}
 	
+	public void updateKitchenDoorSensorValue (int state) {
+		kitchen_door_sensor_value=state;
+	}
+	
+	public void updateLivingroomDoorSensorValue (int state) {
+		livingroom_door_sensor_value=state;
+	}
+	
+	public void updateBathroomDoorSensorValue (int state) {
+		bathroom_door_sensor_value=state;
+	}
+	
+	public void updateBedroomDoorSensorValue (int state) {
+		bedroom_door_sensor_value=state;
+	}
+	
+	public void updateKitchenPresenceValue (int state) {
+		kitchen_presence_value=state;
+	}
+	
+	public void updateLivingroomPresenceValue (int state) {
+		livingroom_presence_value=state;
+	}
+	
+	public void updateBathroomPresenceValue (int state) {
+		bathroom_presence_value=state;
+	}
+	
+	public void updateBedroomPresenceValue (int state) {
+		bedroom_presence_value=state;
+	}
 	
 	public void updateBedroomSprinkSensorValue (int state) {
 		bedroom_sprink_sensor_value=state;
@@ -100,9 +147,7 @@ public class SensorValues {
 
 	public void updateBathroomSprinkSensorValue(int state) {
 		bathroom_sprink_sensor_value=state;
-		
 	}
-	
 
 	public void updateBathroomWindowSensorValue(int state) {
 		bathroom_window_sensor_value=state;		

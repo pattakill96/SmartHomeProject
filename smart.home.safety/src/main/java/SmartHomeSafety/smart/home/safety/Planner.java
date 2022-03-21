@@ -49,39 +49,37 @@ public class Planner{
 	}
 	
 	public void fireSignalArrived(final String room) {
-		int value=0;
+		int value=0, presence=0;
 		switch(room) {
 		case "kitchen" : {
 			value = SensorValues.kitchen_fire_sensor_value;
+			presence = SensorValues.kitchen_presence_value;
 			break;
 			}
 		
 		case "livingroom" : {
 			value = SensorValues.livingroom_fire_sensor_value;
+			presence = SensorValues.livingroom_presence_value;
 			break;
 		}
 		
 		case "bedroom" : {
 			value = SensorValues.bedroom_fire_sensor_value;
+			presence = SensorValues.bedroom_presence_value;
 			break;
 		}
 		
 		case "bathroom" : {
 			value = SensorValues.bathroom_fire_sensor_value;
+			presence = SensorValues.bathroom_presence_value;
 			break;
 		}}
 		if (value == 1) {
+			if(presence==0) {
+				executor.closeDoor(room);}
 			executor.startWaterSprinkler(room);
-			new Thread(new Runnable() {
-			    public void run() {
-			    	try {
-						Thread.sleep(5*1000);
-						executor.stopFire(room);
-			    	} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}			    }
-			}).start();
+			executor.stopFire(room);
+			executor.closeGasKnobs();
 			
 		}
 		
@@ -115,13 +113,13 @@ public class Planner{
 					}).start();
 		}
 					
-	public void gasSignalArrived(final int time_lapse) {
+	public void gasSignalArrived() {
 		new Thread(new Runnable() {
 		    public void run() {
 		    	try {
-					Thread.sleep(time_lapse*1000);
-						int value1 = SensorValues.gas_sensor_value;
+					int value1 = SensorValues.gas_sensor_value;
 					if (value1==1)
+						Thread.sleep(SensorValues.gas_timer*1000);
 						executor.closeGasKnobs();
 		    	} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -135,9 +133,15 @@ public class Planner{
 		
 	}
 	
+	public void presenceSignalArrived(String room) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public void gasSignalPercArrived() {
-		if(SensorValues.gas_sensor_perc > 0.800 && SensorValues.gas_sensor_value==1)
-			executor.closeGasKnobs();
+		System.out.println(SensorValues.gas_sensor_value);
+		if(SensorValues.gas_sensor_perc > 0.800 && SensorValues.gas_sensor_value==1) {
+			executor.closeGasKnobs();}
 		
 	}
 
@@ -145,11 +149,11 @@ public class Planner{
 		new Thread(new Runnable() {
 		    public void run() {
 		    	try {
-					Thread.sleep(10*1000);
 					switch(room) {
 					case "kitchen" : {
 						int value = SensorValues.kitchen_sprink_sensor_value;
 						if (value == 1) {
+							Thread.sleep(5*1000);
 							executor.stopWaterSprinkler(room);
 						}
 						break;
@@ -158,6 +162,7 @@ public class Planner{
 					case "livingroom" : {
 						int value = SensorValues.livingroom_sprink_sensor_value;
 						if (value == 1) {
+							Thread.sleep(5*1000);
 							executor.stopWaterSprinkler(room);
 						}
 						break;
@@ -166,6 +171,7 @@ public class Planner{
 					case "bedroom" : {
 						int value = SensorValues.bedroom_sprink_sensor_value;
 						if (value == 1) {
+							Thread.sleep(5*1000);
 							executor.stopWaterSprinkler(room);
 							
 						}
@@ -175,6 +181,7 @@ public class Planner{
 					case "bathroom" : {
 						int value = SensorValues.bathroom_sprink_sensor_value;
 						if (value == 1) {
+							Thread.sleep(5*1000);
 							executor.stopWaterSprinkler(room);
 						}
 					}

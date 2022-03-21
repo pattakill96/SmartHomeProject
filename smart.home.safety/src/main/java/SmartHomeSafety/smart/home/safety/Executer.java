@@ -50,6 +50,24 @@ public class Executer implements MqttCallback {
 
 	}
 	
+	public void closeDoor(String room) {
+		try {
+			MqttClient client = new MqttClient("tcp://localhost:1883","Executer");
+			client.setCallback(this);
+			MqttConnectOptions mqOptions=new MqttConnectOptions();
+			mqOptions.setCleanSession(true);
+			client.connect(mqOptions);     
+			String command = "{home: {"+room+": { door: 0}}}";
+			MqttMessage message = new MqttMessage(command.getBytes());
+			message.setQos(1);
+			client.publish("home/"+room+"/door/ON", message);
+
+		} catch (MqttException  e) {
+			e.printStackTrace();
+		} 
+
+	}
+	
 	public void startWaterSprinkler(String room) {
 		try {
 			MqttClient client = new MqttClient("tcp://localhost:1883","Executer");

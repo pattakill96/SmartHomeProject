@@ -17,19 +17,22 @@ public class Monitor implements MqttCallback{
 		client.connect(mqOptions);
 		
 		for (MqttTopic topic : MqttTopic.values()) {
-			client.subscribe(topic.getTopic());
+			client.subscribe("#");
 		}
 	}
 
 
 	//Override methods from MqttCallback interface
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
+		//System.out.println(message);
+		//System.out.println(topic);
 		int state = 0;
 		float value=0;
 		String b[] = topic.split("/");
 		String msg = message.toString();
-		if(msg.length()==1)
-			state = Integer.parseInt(msg);
+		if(msg.length()<5) {
+			if(msg.length()==1)
+				state = Integer.parseInt(msg);}
 		else {
 		JsonObject command = new Gson().fromJson(msg, JsonObject.class);
 		JsonObject home = (JsonObject) command.get(b[0]);
@@ -37,9 +40,12 @@ public class Monitor implements MqttCallback{
 		value = room.get(b[2]).getAsFloat();
 		if(b.length==4) {
 			state = room.get(b[2]).getAsInt();}}
+		if(b[1].equals("setter")) {
+			analyzer.setGasTimer(topic, Integer.parseInt(msg));
+		}
 		switch(b[2]) {				
 			case "temperature": {
-				analyzer.TempSensorArrived(b[1], value);
+				analyzer.TempSensorArrived(b[1], Float.parseFloat(msg));
 				break;
 			}
 			
@@ -64,12 +70,17 @@ public class Monitor implements MqttCallback{
 			}
 			
 			case "gasPerc": {
-				analyzer.GasSensorPercArrived(b[1], value);
+				analyzer.GasSensorPercArrived(b[1], Float.parseFloat(msg));
 				break;
 			}
 			
 			case "sprink": {
 				analyzer.SprinklerSensorArrived(b[1], state);
+				break;
+			}
+			
+			case "presence": {
+				analyzer.PresenceSensorArrived(b[1], state);
 				break;
 			}
 		

@@ -6,8 +6,7 @@ public class Analyzer {
 	
 	public void GasSensorArrived(String room, int state) {
 		this.updateData(room, state, 999, "gasknob");
-		int time_lapse = 20;
-		planner.gasSignalArrived(time_lapse);
+		planner.gasSignalArrived();
 	}
 	
 	public void GasSensorPercArrived(String room, float value) {
@@ -41,8 +40,15 @@ public class Analyzer {
 		this.updateData(room, state, 999, "water");
 		planner.waterSignalArrived(room, time_lapse);
 	}
-
 	
+	public void PresenceSensorArrived(String room, int state) {
+		this.updateData(room, state, 999, "presence");
+		planner.presenceSignalArrived(room);
+	}
+
+	public void setGasTimer(String topic, int state) {
+		db.updateGasTimer(state);
+	}
 	public void updateData(String room, int state, float value, String sensor) {
 		if(value != 999){
 			switch(room) {
@@ -108,6 +114,11 @@ public class Analyzer {
 					db.updateKitchenfireSensorValue(state);
 					break;
 				}
+				
+				case "presence": {
+					db.updateKitchenPresenceValue(state);
+					break;
+				}
 				}
 			}
 			
@@ -133,6 +144,10 @@ public class Analyzer {
 					db.updateBathroomfireSensorValue(state);
 					break;
 				}
+				case "presence": {
+					db.updateBathroomPresenceValue(state);
+					break;
+				}
 				}
 			}
 			
@@ -155,6 +170,10 @@ public class Analyzer {
 					db.updateBedroomfireSensorValue(state);
 					break;
 				}
+				case "presence": {
+					db.updateBedroomPresenceValue(state);
+					break;
+				}
 				}
 			}
 			
@@ -175,6 +194,10 @@ public class Analyzer {
 				
 				case "fire": {
 					db.updateLivingroomFireSensorValue(state);
+					break;
+				}
+				case "presence": {
+					db.updateLivingroomPresenceValue(state);
 					break;
 				}
 				}

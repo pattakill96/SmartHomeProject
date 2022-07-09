@@ -3,208 +3,467 @@ package SmartHomeSafety.smart.home.safety;
 public class Analyzer {
 	SensorValues db = new SensorValues();
 	Planner planner = new Planner();
+	Utils u = new Utils();
 	
-	public void GasSensorArrived(String room, int state) {
-		this.updateData(room, state, 999, "gasknob");
+	public void GasSensorArrived() {
 		planner.gasSignalArrived();
 	}
 	
-	public void GasSensorPercArrived(String room, float value) {
-		this.updateData(room, 999, value, "gasPerc");
+	public void GasSensorPercArrived() {
 		planner.gasSignalPercArrived();
 		
 	}
 	
-	public void FireSensorArrived(String room, int state) {
-		this.updateData(room, state, 999, "fire");
+	public void FireSensorArrived(String room) {
 		planner.fireSignalArrived(room);
 	}
 	
-	public void TempSensorArrived(String room, float value) {
-		this.updateData(room, 999, value, "temperature");
-		planner.tempSignalArrived(room);
-	}
-	
-	public void WindowSensorArrived(String room, int state) {
-		this.updateData(room, state, 999, "window");
+	public void WindowSensorArrived(String room) {
 		planner.windowSignalArrived(room);
 	}
 	
-	public void SprinklerSensorArrived(String room, int state) {
-		this.updateData(room, state, 999, "sprink");
+	public void SprinklerSensorArrived(String room) {
 		planner.sprinklerSignalArrived(room);
 	}
 	
-	public void WaterSensorArrived(String room, int state) {
-		int time_lapse = 20;
-		this.updateData(room, state, 999, "water");
-		planner.waterSignalArrived(room, time_lapse);
+	public void WaterSensorArrived(String room) {
+		planner.waterSignalArrived(room);
 	}
 	
-	public void PresenceSensorArrived(String room, int state) {
-		this.updateData(room, state, 999, "presence");
+	public void PresenceSensorArrived(String room) {
 		planner.presenceSignalArrived(room);
 	}
 
-	public void setGasTimer(String topic, int state) {
-		db.updateGasTimer(state);
+	private void ACSensorArrived(String room, Boolean out) {
+		if(!out)
+		planner.ACSignalArrived(room);
+		
 	}
-	public void updateData(String room, int state, float value, String sensor) {
-		if(value != 999){
-			switch(room) {
-			
+
+	private void HeaterSensorArrived(String room, Boolean out) {
+		if(!out)
+		planner.heaterSignalArrived(room);
+		
+	}
+
+	private void DoorSensorArrived(String room) {
+		planner.doorSignalArrived(room);
+		
+	}
+	
+	private void tempSensorActivated(String room, Boolean out) {
+		if(!out)
+			planner.tempSignalArrived(room);
+	}
+	
+	public void updateData(String room, String msg, String sensor, Boolean out) throws NumberFormatException{
+		switch(room) { 
 			case "kitchen": {
 				switch(sensor) {
 				
 				case "temperature": {
-					db.updateKitchenTemperatureSensorValue(value);
+					db.updateKitchenTemperatureSensorValue(Float.parseFloat(msg));
+					this.tempSensorActivated(room, out);
 					break;
 				}
 				
 				case "gasPerc": {
-					db.updateGasSensorPercValue(value);
+					db.updateGasSensorPercValue(Float.parseFloat(msg));
+					this.GasSensorArrived();
 					break;
 				}
-			}}
-			
-			case "bathroom": {
-				db.updateBathroomTemperatureSensorValue(value);
-				break;
-			}
-			
-			case "bedroom": {
-				db.updatebedroomTemperatureSensorValue(value);
-				break;
-			}
-			
-			case "livingroom": {
-				db.updatebedroomTemperatureSensorValue(value);
-				break;
-			}
-
-			}
-		}
-		
-		if(state != 999) {
-			switch(room) {
-			case "kitchen": {
-				switch(sensor) {
 				
 				case "water": {
-					db.updateKitchenWaterSensorValue(state);
+					db.updateKitchenWaterSensorValue(Integer.parseInt(msg));
+					this.WaterSensorArrived(room);
 					break;
 				}
 				
 				case "sprink": {
-					db.updateKitchenSprinkSensorValue(state);
+					db.updateKitchenSprinkSensorValue(Integer.parseInt(msg));
+					this.SprinklerSensorArrived(room);
 					break;
 				}
 				
 				case "window": {
-					db.updateKitchenWindowSensorValue(state);
+					db.updateKitchenWindowSensorValue(Integer.parseInt(msg));
+					this.WindowSensorArrived(room);
 					break;
 				}
 				
 				case "gasknob": {
-					db.updateGasSensorValue(state);
+					db.updateGasSensorValue(Integer.parseInt(msg));
+					this.GasSensorArrived();
 					break;
 				}
 				
 				case "fire": {
-					db.updateKitchenfireSensorValue(state);
+					db.updateKitchenfireSensorValue(Integer.parseInt(msg));
+					this.FireSensorArrived(room);
 					break;
 				}
 				
-				case "presence": {
-					db.updateKitchenPresenceValue(state);
+				case "door": {
+					db.updateKitchenDoorSensorValue(Integer.parseInt(msg));
+					this.DoorSensorArrived(room);
 					break;
 				}
+				
+				case "heater": {
+					db.updateKitchenHeaterSensorValue(Integer.parseInt(msg));
+					this.HeaterSensorArrived(room,out);
+					break;
+				}
+				
+				case "AC": {
+					db.updateKitchenACSensorValue(Integer.parseInt(msg));
+					this.ACSensorArrived(room,out);
+					break;
+				}
+				
+				case "roompresence": {
+					db.updateKitchenPresenceValue(Integer.parseInt(msg));
+					this.PresenceSensorArrived(room);
+					break;
 				}
 			}
+				break;
+			}
+			
 			
 			case "bathroom": {
 				switch(sensor) {
 				
+				case "temperature": {
+					db.updateBathroomTemperatureSensorValue(Float.parseFloat(msg));
+					this.tempSensorActivated(room, out);
+					break;
+				}
+				
 				case "water": {
-					db.updateBathroomWaterSensorValue(state);
+					db.updateBathroomWaterSensorValue(Integer.parseInt(msg));
+					planner.waterSignalArrived(room);
 					break;
 				}
 				
 				case "sprink": {
-					db.updateBathroomSprinkSensorValue(state);
+					db.updateBathroomSprinkSensorValue(Integer.parseInt(msg));
+					planner.sprinklerSignalArrived(room);
 					break;
 				}
 				
 				case "window": {
-					db.updateBathroomWindowSensorValue(state);
+					db.updateBathroomWindowSensorValue(Integer.parseInt(msg));
+					planner.windowSignalArrived(room);
 					break;
 				}
 				
 				case "fire": {
-					db.updateBathroomfireSensorValue(state);
+					db.updateBathroomfireSensorValue(Integer.parseInt(msg));
+					planner.fireSignalArrived(room);
 					break;
 				}
-				case "presence": {
-					db.updateBathroomPresenceValue(state);
+				
+				case "door": {
+					db.updateBathroomDoorSensorValue(Integer.parseInt(msg));
+					planner.doorSignalArrived(room);
+					break;
+				}
+				
+				case "heater": {
+					db.updateBathroomHeaterSensorValue(Integer.parseInt(msg));
+					this.HeaterSensorArrived(room, out);
+					break;
+				}
+				
+				case "AC": {
+					db.updateBathroomACSensorValue(Integer.parseInt(msg));
+					this.ACSensorArrived(room, out);
+					break;
+				}
+				
+				case "roompresence": {
+					db.updateBathroomPresenceValue(Integer.parseInt(msg));
+					planner.presenceSignalArrived(room);
 					break;
 				}
 				}
+				break;
 			}
 			
 			case "bedroom": {
 				switch(sensor) {
 				
 				
+				case "temperature": {
+					db.updatebedroomTemperatureSensorValue(Float.parseFloat(msg));
+					this.tempSensorActivated(room, out);
+					break;
+				}
+				
 				case "sprink": {
-					db.updateBedroomSprinkSensorValue(state);
+					db.updateBedroomSprinkSensorValue(Integer.parseInt(msg));
+					planner.sprinklerSignalArrived(room);
 					break;
 				}
 				
 				case "window": {
-					db.updateBedroomWindowSensorValue(state);
+					db.updateBedroomWindowSensorValue(Integer.parseInt(msg));
+					planner.windowSignalArrived(room);
 					break;
 				}
-				
 				
 				case "fire": {
-					db.updateBedroomfireSensorValue(state);
+					db.updateBedroomfireSensorValue(Integer.parseInt(msg));
+					planner.fireSignalArrived(room);
 					break;
 				}
-				case "presence": {
-					db.updateBedroomPresenceValue(state);
+				
+				case "door": {
+					db.updateBedroomDoorSensorValue(Integer.parseInt(msg));
+					planner.doorSignalArrived(room);
+					break;
+				}
+				
+				case "heater": {
+					db.updateBedroomHeaterSensorValue(Integer.parseInt(msg));
+					this.HeaterSensorArrived(room, out);
+					break;
+				}
+				
+				case "AC": {
+					db.updateBedroomACSensorValue(Integer.parseInt(msg));
+					this.ACSensorArrived(room, out);
+					break;
+				}
+				
+				case "roompresence": {
+					db.updateBedroomPresenceValue(Integer.parseInt(msg));
+					planner.presenceSignalArrived(room);
 					break;
 				}
 				}
+				break;
 			}
 			
 			case "livingroom": {
 				switch(sensor) {
 				
 				
+				case "temperature": {
+					db.updatelivingroomTemperatureSensorValue(Float.parseFloat(msg));
+					this.tempSensorActivated(room, out);
+					break;
+				}
+				
 				case "sprink": {
-					db.updateLivingroomSprinkSensorValue(state);
+					db.updateLivingroomSprinkSensorValue(Integer.parseInt(msg));
+					planner.sprinklerSignalArrived(room);
 					break;
 				}
 				
 				case "window": {
-					db.updateLivingRoomWindowSensorValue(state);
+					db.updateLivingRoomWindowSensorValue(Integer.parseInt(msg));
+					planner.windowSignalArrived(room);
 					break;
 				}
-				
 				
 				case "fire": {
-					db.updateLivingroomFireSensorValue(state);
+					db.updateLivingroomFireSensorValue(Integer.parseInt(msg));
+					planner.fireSignalArrived(room);
 					break;
 				}
-				case "presence": {
-					db.updateLivingroomPresenceValue(state);
+				
+				case "door": {
+					db.updateLivingroomDoorSensorValue(Integer.parseInt(msg));
+					planner.doorSignalArrived(room);
+					break;
+				}
+				
+				case "heater": {
+					db.updateLivingroomHeaterSensorValue(Integer.parseInt(msg));
+					this.HeaterSensorArrived(room, out);
+					break;
+				}
+				
+				case "AC": {
+					db.updateLivingroomACSensorValue(Integer.parseInt(msg));
+					this.ACSensorArrived(room, out);
+					break;
+				}
+				
+				case "roompresence": {
+					db.updateLivingroomPresenceValue(Integer.parseInt(msg));
+					planner.presenceSignalArrived(room);
 					break;
 				}
 				}
+				break;
 			}
+			case "setter":{
+				switch(sensor) {
+					 
+				case "gastime":{
+					db.updateGasTimer(Integer.parseInt(msg));
+					break;
+				}
+				
+				case "watertime":{
+					db.updateWaterTimer(Integer.parseInt(msg));
+					break;
+				}
+				
+				case "kdmin":{
+					db.updateKitchenDayMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("kitchen", out);
+					break;
+				}
+				case "kdmax":{
+					db.updateKitchenDayMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("kitchen", out);
+					break;
+				}
+				case "knmin":{
+					db.updateKitchenNightMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("kitchen", out);
+					break;
+				}
+				case "knmax":{
+					db.updateKitchenNightMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("kitchen", out);
+					break;
+				}
+				case "ldmin":{
+					db.updateLivingroomDayMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("livingroom", out);
+					break;
+				}
+				case "ldmax":{
+					db.updateLivingroomDayMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("livingroom", out);
+					break;
+				}
+				case "lnmin":{
+					db.updateLivingroomNightMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("livingroom", out);
+					break;
+				}
+				case "lnmax":{
+					db.updateLivingroomNightMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("livingroom", out);
+					break;
+				}
+				case "bdmin":{
+					db.updateBedroomDayMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bedroom", out);
+					break;
+				}
+				case "bdmax":{
+					db.updateBedroomDayMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bedroom", out);
+					break;
+				}
+				case "bnmin":{
+					db.updateBedroomNightMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bedroom", out);
+					break;
+				}
+				case "bnmax":{
+					db.updateBedroomNightMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bedroom", out);
+					break;
+				}
+				case "btdmin":{
+					db.updateBathroomDayMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bathroom", out);
+					break;
+				}
+				case "btdmax":{
+					db.updateBathroomDayMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bathroom", out);
+					break;
+				}
+				case "btnmin":{
+					db.updateBathroomNightMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bathroom", out);
+					break;
+				}
+				case "btnmax":{
+					db.updateBathroomNightMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bathroom", out);
+					break;
+				}
+				case "importmode":{
+					if(msg.equals("1"))
+						planner.importdata();
+					break;
+				}
+				case "savemode":{
+					if(msg.equals("1"))
+						planner.savedata();
+					break;
+				}
+				
+				}
+				break;
 			}
+			
+			case "presence":{
+				switch(sensor) {
+				 
+				case "mode":{
+					db.updatePresenceMode(Integer.parseInt(msg));
+					planner.presenceModeArrived("all");;
+					break;
+				}
+				case "kmin":{
+					db.updateKitchenPresenceMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("kitchen", out);
+					break;
+				}
+				case "kmax":{
+					db.updateKitchenPresenceMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("kitchen", out);
+					break;
+				}
+				case "lmin":{
+					db.updateLivingroomPresenceMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("livingroom", out);
+					break;
+				}
+				case "lmax":{
+					db.updateLivingroomPresenceMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("livingroom", out);
+					break;
+				}
+				case "bmin":{
+					db.updateBedroomPresenceMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bedroom", out);
+					break;
+				}
+				case "bmax":{
+					db.updateBedroomPresenceMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bedroom", out);
+					break;
+				}
+				case "btmin":{
+					db.updateBathroomPresenceMinValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bathroom", out);
+					break;
+				}
+				case "btmax":{
+					db.updateBathroomPresenceMaxValue(Float.parseFloat(msg));
+					this.tempSensorActivated("bathroom", out);
+					break;
+				}
+				
+				}
+				break;
+			}
+		
 		}
 	}
+}
 
 	
-}
+

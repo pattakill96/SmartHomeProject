@@ -7,14 +7,16 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class MainFunction {
 
 	public static void main(String[] args) throws MqttException {
-		try {
-				System.out.println("Started");
-				new Monitor();
-			} catch (MqttException e) {
+		System.out.println("Started");
+		Populator p = new Populator();
+		p.Populate();
+		//DBConnector d = new DBConnector();
+			try {
+			//d.readData();
+			 new Monitor();	
+			} catch (Exception e) {
 				e.printStackTrace();
-				main(null);
+				//main(null);
 			}
-			
-		
 		}
 	}

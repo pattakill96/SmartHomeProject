@@ -26,6 +26,6 @@
 	<classpathentry kind="lib" path="C:/Users/lucap/OneDrive/Documenti/GitHub/SmartHomeProject/lib/gson-2.8.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/lucap/OneDrive/Documenti/GitHub/SmartHomeProject/lib/java-json.jar"/>
 	<classpathentry kind="lib" path="C:/Users/lucap/OneDrive/Documenti/GitHub/SmartHomeProject/lib/json-simple-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lucap/OneDrive/Documenti/GitHub/SmartHomeProject/lib/org.eclipse.paho.client.mqttv3-1.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/lucap/OneDrive/Documenti/GitHub/SmartHomeProject/lib/org.eclipse.paho.client.mqttv3-1.2.2.jar" sourcepath="/SmartHomeProject/lib/org.eclipse.paho.client.mqttv3-1.2.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

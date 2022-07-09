@@ -2,49 +2,341 @@ package SmartHomeSafety.smart.home.safety;
 
 public class Planner{
 
-	Executer executor = new Executer(); 
+	Executer executer = new Executer(); 
 
 
 	public void tempSignalArrived(String room) {
 		
+		Utils t = new Utils();
 		switch(room) {
-		
-		case "kitchen" : {
-				float tempval = SensorValues.kitchen_temp_sensor_value;
-				int window = SensorValues.kitchen_window_sensor_value;
-				if(tempval > 25 && window == 0) {					
-					executor.openWindow(room);
+			case "kitchen" : {
+					if(SensorValues.kitchen_presence_value==1 && SensorValues.presence_mode==1) {
+						if(SensorValues.kitchen_temp_sensor_value > SensorValues.kitchen_presence_max_value) {
+							if(SensorValues.kitchen_ac_sensor_value==0)
+								executer.turnACON(room);
+							if(SensorValues.kitchen_heater_sensor_value==1)
+								executer.turnHeaterOFF(room);
+							if(SensorValues.kitchen_window_sensor_value==1)
+								executer.closeWindow(room);
+						}
+						if(SensorValues.kitchen_temp_sensor_value < SensorValues.kitchen_presence_min_value) {
+							if(SensorValues.kitchen_heater_sensor_value==0)
+								executer.turnHeaterON(room);
+							if(SensorValues.kitchen_ac_sensor_value==1)
+								executer.turnACOFF(room);
+							if(SensorValues.kitchen_window_sensor_value==0)
+								executer.closeWindow(room);
+						}
+						if(SensorValues.kitchen_temp_sensor_value <= SensorValues.kitchen_presence_max_value && SensorValues.kitchen_temp_sensor_value >= SensorValues.kitchen_presence_min_value ) {
+							if(SensorValues.kitchen_heater_sensor_value==1)
+								executer.turnHeaterOFF(room);
+							if(SensorValues.kitchen_ac_sensor_value==1)
+								executer.turnACOFF(room);
+						}
+					}
+					else {
+						switch(t.dayShift()) {
+							case("day"):{
+								//System.out.println("TEMP:"+SensorValues.kitchen_temp_sensor_value+"\nMIN:"+SensorValues.kitchen_day_min_value+"\nMAX:"+SensorValues.kitchen_day_max_value);
+								if(SensorValues.kitchen_temp_sensor_value > SensorValues.kitchen_day_max_value) {
+									if(SensorValues.kitchen_ac_sensor_value==0)
+										executer.turnACON(room);
+									if(SensorValues.kitchen_heater_sensor_value==1)
+										executer.turnHeaterOFF(room);
+									if(SensorValues.kitchen_window_sensor_value==1)
+										executer.closeWindow(room);
+								}
+								if(SensorValues.kitchen_temp_sensor_value < SensorValues.kitchen_day_min_value) {
+									if(SensorValues.kitchen_heater_sensor_value==0)
+										executer.turnHeaterON(room);
+									if(SensorValues.kitchen_ac_sensor_value==1)
+										executer.turnACOFF(room);
+									if(SensorValues.kitchen_window_sensor_value==0)
+										executer.closeWindow(room);
+								}
+								if(SensorValues.kitchen_temp_sensor_value <= SensorValues.kitchen_day_max_value && SensorValues.kitchen_temp_sensor_value >= SensorValues.kitchen_day_min_value ) {
+									if(SensorValues.kitchen_heater_sensor_value==1)
+										executer.turnHeaterOFF(room);
+									if(SensorValues.kitchen_ac_sensor_value==1)
+										executer.turnACOFF(room);
+								}
+								break;
+							}
+							case("night"):{
+								if(SensorValues.kitchen_temp_sensor_value > SensorValues.kitchen_night_max_value) {
+									if(SensorValues.kitchen_ac_sensor_value==0)
+										executer.turnACON(room);
+									if(SensorValues.kitchen_heater_sensor_value==1)
+										executer.turnHeaterOFF(room);
+									if(SensorValues.kitchen_window_sensor_value==1)
+										executer.closeWindow(room);
+								}
+								if(SensorValues.kitchen_temp_sensor_value < SensorValues.kitchen_night_min_value) {
+									if(SensorValues.kitchen_heater_sensor_value==0)
+										executer.turnHeaterON(room);
+									if(SensorValues.kitchen_ac_sensor_value==1)
+										executer.turnACOFF(room);
+									if(SensorValues.kitchen_window_sensor_value==0)
+										executer.closeWindow(room);
+								}
+								if(SensorValues.kitchen_temp_sensor_value <= SensorValues.kitchen_night_max_value && SensorValues.kitchen_temp_sensor_value >= SensorValues.kitchen_night_min_value ) {
+									if(SensorValues.kitchen_heater_sensor_value==1)
+										executer.turnHeaterOFF(room);
+									if(SensorValues.kitchen_ac_sensor_value==1)
+										executer.turnACOFF(room);
+								}
+								break;
+							}
+						}
+					}
+					break;
+				}
+
+			case "livingroom" : {
+				if(SensorValues.livingroom_presence_value==1 && SensorValues.presence_mode==1) {
+					if(SensorValues.livingroom_temp_sensor_value > SensorValues.livingroom_presence_max_value) {
+						if(SensorValues.livingroom_ac_sensor_value==0)
+							executer.turnACON(room);
+						if(SensorValues.livingroom_heater_sensor_value==1)
+							executer.turnHeaterOFF(room);
+						if(SensorValues.livingroom_window_sensor_value==1)
+							executer.closeWindow(room);
+					}
+					if(SensorValues.livingroom_temp_sensor_value < SensorValues.livingroom_presence_min_value) {
+						if(SensorValues.livingroom_heater_sensor_value==0)
+							executer.turnHeaterON(room);
+						if(SensorValues.livingroom_ac_sensor_value==1)
+							executer.turnACOFF(room);
+						if(SensorValues.livingroom_window_sensor_value==1)
+							executer.closeWindow(room);
+					}
+					if(SensorValues.livingroom_temp_sensor_value <= SensorValues.livingroom_presence_max_value && SensorValues.livingroom_temp_sensor_value >= SensorValues.livingroom_presence_min_value ) {
+						if(SensorValues.livingroom_heater_sensor_value==1)
+							executer.turnHeaterOFF(room);
+						if(SensorValues.livingroom_ac_sensor_value==1)
+							executer.turnACOFF(room);
+					}
+				}
+				else {
+					switch(t.dayShift()) {
+						case("day"):{
+							if(SensorValues.livingroom_temp_sensor_value > SensorValues.livingroom_day_max_value) {
+								if(SensorValues.livingroom_ac_sensor_value==0)
+									executer.turnACON(room);
+								if(SensorValues.livingroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+								if(SensorValues.livingroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.livingroom_temp_sensor_value < SensorValues.livingroom_day_min_value) {
+								if(SensorValues.livingroom_heater_sensor_value==0)
+									executer.turnHeaterON(room);
+								if(SensorValues.livingroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+								if(SensorValues.livingroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.livingroom_temp_sensor_value <= SensorValues.livingroom_day_max_value && SensorValues.livingroom_temp_sensor_value >= SensorValues.livingroom_day_min_value ) {
+								if(SensorValues.livingroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+								if(SensorValues.livingroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+							}
+							break;
+						}
+						case("night"):{
+							if(SensorValues.livingroom_temp_sensor_value > SensorValues.livingroom_night_max_value) {
+								if(SensorValues.livingroom_ac_sensor_value==0)
+									executer.turnACON(room);
+								if(SensorValues.livingroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+								if(SensorValues.livingroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.livingroom_temp_sensor_value < SensorValues.livingroom_night_min_value) {
+								if(SensorValues.livingroom_heater_sensor_value==0)
+									executer.turnHeaterON(room);
+								if(SensorValues.livingroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+								if(SensorValues.livingroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.livingroom_temp_sensor_value <= SensorValues.livingroom_night_max_value && SensorValues.livingroom_temp_sensor_value >= SensorValues.livingroom_night_min_value ) {
+								if(SensorValues.livingroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+								if(SensorValues.livingroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+							}
+							break;
+						}
+					}
 				}
 				break;
 			}
-		
-		case "livingroom" : {
-			float tempval = SensorValues.livingroom_temp_sensor_value;
-			int window = SensorValues.livingroom_window_sensor_value;
-			if(tempval > 25 && window == 0) {					
-				executor.openWindow(room);
+			
+			case "bedroom" : {
+				if(SensorValues.bedroom_presence_value==1 && SensorValues.presence_mode==1) {
+					if(SensorValues.bedroom_temp_sensor_value > SensorValues.bedroom_presence_max_value) {
+						if(SensorValues.bedroom_ac_sensor_value==0)
+							executer.turnACON(room);
+						if(SensorValues.bedroom_heater_sensor_value==1)
+							executer.turnHeaterOFF(room);
+						if(SensorValues.bedroom_window_sensor_value==1)
+							executer.closeWindow(room);
+					}
+					if(SensorValues.bedroom_temp_sensor_value < SensorValues.bedroom_presence_min_value) {
+						if(SensorValues.bedroom_ac_sensor_value==1)
+							executer.turnACOFF(room);
+						if(SensorValues.bedroom_heater_sensor_value==0)
+							executer.turnHeaterON(room);
+						if(SensorValues.bedroom_window_sensor_value==1)
+							executer.closeWindow(room);
+					}
+					if(SensorValues.bedroom_temp_sensor_value <= SensorValues.bedroom_presence_max_value && SensorValues.bedroom_temp_sensor_value >= SensorValues.bedroom_presence_min_value ) {
+						if(SensorValues.bedroom_ac_sensor_value==1)
+							executer.turnACOFF(room);
+						if(SensorValues.bedroom_heater_sensor_value==1)
+							executer.turnHeaterOFF(room);
+					}
+				}
+				else {
+					switch(t.dayShift()) {
+						case("day"):{
+							if(SensorValues.bedroom_temp_sensor_value > SensorValues.bedroom_day_max_value) {
+								if(SensorValues.bedroom_ac_sensor_value==0)
+									executer.turnACON(room);
+								if(SensorValues.bedroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+								if(SensorValues.bedroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.bedroom_temp_sensor_value < SensorValues.bedroom_day_min_value) {
+								if(SensorValues.bedroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+								if(SensorValues.bedroom_heater_sensor_value==0)
+									executer.turnHeaterON(room);
+								if(SensorValues.bedroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.bedroom_temp_sensor_value <= SensorValues.bedroom_day_max_value && SensorValues.bedroom_temp_sensor_value >= SensorValues.bedroom_day_min_value ) {
+								if(SensorValues.bedroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+								if(SensorValues.bedroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+							}
+							break;
+						}
+						case("night"):{
+							if(SensorValues.bedroom_temp_sensor_value > SensorValues.bedroom_night_max_value) {
+								if(SensorValues.bedroom_ac_sensor_value==0)
+									executer.turnACON(room);
+								if(SensorValues.bedroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+								if(SensorValues.bedroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.bedroom_temp_sensor_value < SensorValues.bedroom_night_min_value) {
+								if(SensorValues.bedroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+								if(SensorValues.bedroom_heater_sensor_value==0)
+									executer.turnHeaterON(room);
+								if(SensorValues.bedroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.bedroom_temp_sensor_value <= SensorValues.bedroom_night_max_value && SensorValues.bedroom_temp_sensor_value >= SensorValues.bedroom_night_min_value ) {
+								if(SensorValues.bedroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+								if(SensorValues.bedroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+							}
+							break;
+						}
+					}
+				}
+				break;
 			}
-			break;
-		}
-		
-		case "bedroom" : {
-			float tempval = SensorValues.bedroom_temp_sensor_value;
-			int window = SensorValues.bedroom_window_sensor_value;
-			if(tempval > 25 && window == 0) {					
-				executor.openWindow(room);
+			
+			case "bathroom" : {
+				if(SensorValues.bathroom_presence_value==1 && SensorValues.presence_mode==1) {
+					if(SensorValues.bathroom_temp_sensor_value > SensorValues.bathroom_presence_max_value) {
+						if(SensorValues.bathroom_ac_sensor_value==0)
+							executer.turnACON(room);
+						if(SensorValues.bathroom_heater_sensor_value==1)
+							executer.turnHeaterOFF(room);
+						if(SensorValues.bathroom_window_sensor_value==1)
+							executer.closeWindow(room);
+					}
+					if(SensorValues.bathroom_temp_sensor_value < SensorValues.bathroom_presence_min_value) {
+						if(SensorValues.bathroom_ac_sensor_value==1)
+							executer.turnACOFF(room);
+						if(SensorValues.bathroom_heater_sensor_value==0)
+							executer.turnHeaterON(room);
+						if(SensorValues.bathroom_window_sensor_value==1)
+							executer.closeWindow(room);
+					}
+					if(SensorValues.bathroom_temp_sensor_value <= SensorValues.bathroom_presence_max_value && SensorValues.bathroom_temp_sensor_value >= SensorValues.bathroom_presence_min_value ) {
+						if(SensorValues.bathroom_ac_sensor_value==1)
+							executer.turnACOFF(room);
+						if(SensorValues.bathroom_heater_sensor_value==1)
+							executer.turnHeaterOFF(room);
+					}
+				}
+				else {
+					switch(t.dayShift()) {
+						case("day"):{
+							if(SensorValues.bathroom_temp_sensor_value > SensorValues.bathroom_day_max_value) {
+								if(SensorValues.bathroom_ac_sensor_value==0)
+									executer.turnACON(room);
+								if(SensorValues.bathroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+								if(SensorValues.bathroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.bathroom_temp_sensor_value < SensorValues.bathroom_day_min_value) {
+								if(SensorValues.bathroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+								if(SensorValues.bathroom_heater_sensor_value==0)
+									executer.turnHeaterON(room);
+								if(SensorValues.bathroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.bathroom_temp_sensor_value <= SensorValues.bathroom_day_max_value && SensorValues.bathroom_temp_sensor_value >= SensorValues.bathroom_day_min_value ) {
+								if(SensorValues.bathroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+								if(SensorValues.bathroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+							}
+							break;
+						}
+						case("night"):{
+							if(SensorValues.bathroom_temp_sensor_value > SensorValues.bathroom_night_max_value) {
+								if(SensorValues.bathroom_ac_sensor_value==0)
+									executer.turnACON(room);
+								if(SensorValues.bathroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+								if(SensorValues.bathroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.bathroom_temp_sensor_value < SensorValues.bathroom_night_min_value) {
+								if(SensorValues.bathroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+								if(SensorValues.bathroom_heater_sensor_value==0)
+									executer.turnHeaterON(room);
+								if(SensorValues.bathroom_window_sensor_value==1)
+									executer.closeWindow(room);
+							}
+							if(SensorValues.bathroom_temp_sensor_value <= SensorValues.bathroom_night_max_value && SensorValues.bathroom_temp_sensor_value >= SensorValues.bathroom_night_min_value ) {
+								if(SensorValues.bathroom_ac_sensor_value==1)
+									executer.turnACOFF(room);
+								if(SensorValues.bathroom_heater_sensor_value==1)
+									executer.turnHeaterOFF(room);
+							}
+							break;
+						}
+					}
+				}
+				break;
 			}
-			break;
-		}
-		
-		case "bathroom" : {
-			float tempval = SensorValues.bathroom_temp_sensor_value;
-			int window = SensorValues.bathroom_window_sensor_value;
-			if(tempval > 25 && window == 0) {					
-				executor.openWindow(room);
-			}
-			break;
-		}
-		
 		}
 	}
 	
@@ -76,10 +368,10 @@ public class Planner{
 		}}
 		if (value == 1) {
 			if(presence==0) {
-				executor.closeDoor(room);}
-			executor.startWaterSprinkler(room);
-			executor.stopFire(room);
-			executor.closeGasKnobs();
+				executer.closeDoor(room);}
+			executer.startWaterSprinkler(room);
+			executer.stopFire(room);
+			executer.closeGasKnobs();
 			
 		}
 		
@@ -88,12 +380,12 @@ public class Planner{
 
 
 	
-	public void waterSignalArrived(final String room, final int time_lapse) {
+	public void waterSignalArrived(final String room) {
 					new Thread(new Runnable() {
 						int value1;
 					    public void run() {
 					    	try {
-								Thread.sleep(time_lapse*1000);
+								Thread.sleep(SensorValues.water_timer*1000);
 								switch(room) {
 								case "kitchen":{
 									value1 = SensorValues.kitchen_water_sensor_value;
@@ -105,7 +397,7 @@ public class Planner{
 								}
 								}
 								if (value1==1)
-									executor.closeWaterTaps(room);
+									executer.closeWaterTaps(room);
 					    	} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -117,10 +409,11 @@ public class Planner{
 		new Thread(new Runnable() {
 		    public void run() {
 		    	try {
+		    		Thread.sleep(SensorValues.gas_timer*1000);
 					int value1 = SensorValues.gas_sensor_value;
 					if (value1==1)
-						Thread.sleep(SensorValues.gas_timer*1000);
-						executor.closeGasKnobs();
+						
+						executer.closeGasKnobs();
 		    	} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -128,20 +421,13 @@ public class Planner{
 		}).start();
 }
 
-	public void windowSignalArrived(String room) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void presenceSignalArrived(String room) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public void gasSignalPercArrived() {
 		System.out.println(SensorValues.gas_sensor_value);
 		if(SensorValues.gas_sensor_perc > 0.800 && SensorValues.gas_sensor_value==1) {
-			executor.closeGasKnobs();}
+			if(SensorValues.kitchen_window_sensor_value!=1) {
+				executer.openWindow("kitchen");}
+			executer.closeGasKnobs();}
 		
 	}
 
@@ -154,7 +440,7 @@ public class Planner{
 						int value = SensorValues.kitchen_sprink_sensor_value;
 						if (value == 1) {
 							Thread.sleep(5*1000);
-							executor.stopWaterSprinkler(room);
+							executer.stopWaterSprinkler(room);
 						}
 						break;
 						}
@@ -163,7 +449,7 @@ public class Planner{
 						int value = SensorValues.livingroom_sprink_sensor_value;
 						if (value == 1) {
 							Thread.sleep(5*1000);
-							executor.stopWaterSprinkler(room);
+							executer.stopWaterSprinkler(room);
 						}
 						break;
 					}
@@ -172,7 +458,7 @@ public class Planner{
 						int value = SensorValues.bedroom_sprink_sensor_value;
 						if (value == 1) {
 							Thread.sleep(5*1000);
-							executor.stopWaterSprinkler(room);
+							executer.stopWaterSprinkler(room);
 							
 						}
 						break;
@@ -182,7 +468,7 @@ public class Planner{
 						int value = SensorValues.bathroom_sprink_sensor_value;
 						if (value == 1) {
 							Thread.sleep(5*1000);
-							executor.stopWaterSprinkler(room);
+							executer.stopWaterSprinkler(room);
 						}
 					}
 					break;
@@ -193,6 +479,40 @@ public class Planner{
 				}			    }
 		}).start();
 		}
+
+		public void doorSignalArrived(String room) {	
+		}
 	
-	}
+		public void heaterSignalArrived(String room) {
+			this.tempSignalArrived(room);
+		}
+	
+		public void ACSignalArrived(String room) {
+			this.tempSignalArrived(room);
+		}
+		
+		public void windowSignalArrived(String room) {
+		}
+		
+		public void presenceSignalArrived(String room) {
+			this.tempSignalArrived(room);
+		}
+		
+		public void presenceModeArrived(String room) {
+			this.tempSignalArrived("kitchen");
+			this.tempSignalArrived("livingroom");
+			this.tempSignalArrived("bedroom");
+			this.tempSignalArrived("bathroom");
+		}
+
+		public void importdata() {
+			executer.importdatafromDB();
+			
+		}
+
+		public void savedata() {
+			executer.savedatafromDB();
+			
+		}
+}
 

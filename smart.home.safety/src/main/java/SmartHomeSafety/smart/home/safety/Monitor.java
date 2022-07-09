@@ -3,6 +3,8 @@ package SmartHomeSafety.smart.home.safety;
 import org.eclipse.paho.client.mqttv3.*;
 import com.google.gson.*;
 import java.lang.String;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Monitor implements MqttCallback{
@@ -15,77 +17,119 @@ public class Monitor implements MqttCallback{
 		MqttConnectOptions mqOptions=new MqttConnectOptions();
 		mqOptions.setCleanSession(true);
 		client.connect(mqOptions);
+	
 		
-		for (MqttTopic topic : MqttTopic.values()) {
+		//for (MqttTopic topic : MqttTopic.values()) {
+			//System.out.println("aaa");
 			client.subscribe("#");
-		}
+		//}
 	}
 
 
 	//Override methods from MqttCallback interface
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
-		//System.out.println(message);
-		//System.out.println(topic);
-		int state = 0;
-		float value=0;
 		String b[] = topic.split("/");
 		String msg = message.toString();
-		if(msg.length()<5) {
-			if(msg.length()==1)
-				state = Integer.parseInt(msg);}
-		else {
-		JsonObject command = new Gson().fromJson(msg, JsonObject.class);
-		JsonObject home = (JsonObject) command.get(b[0]);
-		JsonObject room = (JsonObject) home.get(b[1]);
-		value = room.get(b[2]).getAsFloat();
-		if(b.length==4) {
-			state = room.get(b[2]).getAsInt();}}
-		if(b[1].equals("setter")) {
-			analyzer.setGasTimer(topic, Integer.parseInt(msg));
+		String s= "OPEN";
+		String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
+		if(msg.equals("0"))
+			s="CLOSE";
+		if(!msg.equals("0") && !msg.equals("1"))
+			s=msg;
+		if(!topic.contains("ON"))
+            System.out.println("["+timestamp+"] System received message (" + topic + "): " + s);
+		//System.out.println(b[1]+" "+b[2]+" "+msg);
+		try {
+		analyzer.updateData(b[1], msg, b[2],topic.contains("ON"));
 		}
-		switch(b[2]) {				
+		catch(NumberFormatException e){
+			e.printStackTrace();
+		}
+		/*switch(b[2]) {				
 			case "temperature": {
-				analyzer.TempSensorArrived(b[1], Float.parseFloat(msg));
+				
+				//analyzer.TempSensorArrived(b[1], msg);
 				break;
 			}
 			
 			case "window": {
-				analyzer.WindowSensorArrived(b[1], state);
+				System.out.println(topic+" "+msg);
+				//analyzer.WindowSensorArrived(b[1], Integer.parseInt(msg));
 				break;
 			}
 			
 			case "water": {
-				analyzer.WaterSensorArrived(b[1], state);
+				System.out.println(topic+" "+msg);
+				//analyzer.WaterSensorArrived(b[1], Integer.parseInt(msg));
 				break;
 			}
 			
 			case "fire": {
-				analyzer.FireSensorArrived(b[1], state);
+				System.out.println(topic+" "+msg);
+				//analyzer.FireSensorArrived(b[1], Integer.parseInt(msg));
 				break;
 			}
 			
 			case "gasknob": {
-				analyzer.GasSensorArrived(b[1], state);
+				System.out.println(topic+" "+msg);
+				//analyzer.GasSensorArrived(b[1], Integer.parseInt(msg));
 				break;
 			}
 			
 			case "gasPerc": {
-				analyzer.GasSensorPercArrived(b[1], Float.parseFloat(msg));
+				System.out.println(topic+" "+msg);
+				//analyzer.GasSensorPercArrived(b[1], Float.parseFloat(msg));
 				break;
 			}
 			
 			case "sprink": {
-				analyzer.SprinklerSensorArrived(b[1], state);
+				System.out.println(topic+" "+msg);
+				//analyzer.SprinklerSensorArrived(b[1], Integer.parseInt(msg));
+				break;
+			}
+			
+			case "roompresence": {
+				System.out.println(topic+" "+msg);
+				//analyzer.PresenceSensorArrived(b[1], Integer.parseInt(msg));
+				break;
+			}
+			
+			case "heater": {
+				System.out.println(topic+" "+msg);
+				//analyzer.HeaterSensorArrived(b[1], Integer.parseInt(msg));
+				break;
+			}
+			
+			case "door": {
+				System.out.println(topic+" "+msg);
+				//analyzer.DoorSensorArrived(b[1], Integer.parseInt(msg));
+				break;
+			}
+			
+			case "AC": {
+				System.out.println(topic+" "+msg);
+				//analyzer.ACSensorArrived(b[1], Integer.parseInt(msg));
+				break;
+			}
+			
+			case "setter": {
+				System.out.println(topic+" "+msg);
+				//analyzer.ACSensorArrived(b[1], Integer.parseInt(msg));
 				break;
 			}
 			
 			case "presence": {
-				analyzer.PresenceSensorArrived(b[1], state);
+				System.out.println(topic+" "+msg);
+				//analyzer.ACSensorArrived(b[1], Integer.parseInt(msg));
 				break;
 			}
 		
-		
-		}
+			case "presenceMode": {
+				System.out.println(topic+" "+msg);
+				//analyzer.ACSensorArrived(b[1], Integer.parseInt(msg));
+				break;
+			}
+		}*/
 
 	}
 

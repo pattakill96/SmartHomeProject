@@ -1,0 +1,15 @@
+{
+  "autoupdate:Kitchen_day_min": {
+    "class": "org.eclipse.smarthome.core.items.Metadata",
+    "value": {
+      "key": {
+        "segments": [
+          "autoupdate",
+          "Kitchen_day_min"
+        ]
+      },
+      "value": "true",
+      "configuration": {}
+    }
+  }
+}

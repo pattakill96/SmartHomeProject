@@ -1,0 +1,22 @@
+{
+  "Kitchen_Gas -\u003e mqtt:topic:mybroker:kitchen:power": {
+    "class": "org.eclipse.smarthome.core.thing.link.ItemChannelLink",
+    "value": {
+      "channelUID": {
+        "segments": [
+          "mqtt",
+          "topic",
+          "mybroker",
+          "kitchen",
+          "power"
+        ]
+      },
+      "configuration": {
+        "properties": {
+          "profile": "system:default"
+        }
+      },
+      "itemName": "Kitchen_Gas"
+    }
+  }
+}

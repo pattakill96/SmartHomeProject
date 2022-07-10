@@ -3,43 +3,111 @@ Bridge mqtt:broker:mybroker "Broker MQTT" [ host="localhost", port=1883, secure=
     Thing topic kitchen "Kitchen" @ "Smart Home"
     {
         Channels:
-            Type switch : gas "KitchenGas" [stateTopic="home/kitchen/gasknob/ON", transformationPattern="JSONPATH:$.home.kitchen.gasknob", commandTopic="home/kitchen/gasknob"]
-            Type switch : water "KitchenWater" [stateTopic="home/kitchen/water/ON", transformationPattern="JSONPATH:$.home.kitchen.water", commandTopic="home/kitchen/water"]
-            Type switch : window "KitchenWindow" [stateTopic="home/kitchen/window/ON", transformationPattern="JSONPATH:$.home.kitchen.window", commandTopic="home/kitchen/window"]
-            Type switch : fire "KitchenFire" [stateTopic="home/kitchen/fire/ON", transformationPattern="JSONPATH:$.home.kitchen.fire", commandTopic="home/kitchen/fire"]
-            Type number : temp "KitchenTemp" [stateTopic="home/kitchen/temperature", transformationPattern="JSONPATH:$.home.kitchen.temperature", unit="°C"]
-            Type switch : sprink "KitchenSprink" [stateTopic="home/kitchen/sprink/ON", transformationPattern="JSONPATH:$.home.kitchen.sprink", commandTopic="home/kitchen/sprink"]
-            Type number : gasP "KitchenGasPerc" [stateTopic="home/kitchen/gasPerc", transformationPattern="JSONPATH:$.home.kitchen.gasPerc", unit="‰"]
-    }
+            Type switch : gas "KitchenGas" [stateTopic="home/kitchen/gasknob/ON", transformationPattern="", commandTopic="home/kitchen/gasknob"]
+            Type switch : water "KitchenWater" [stateTopic="home/kitchen/water/ON", transformationPattern="", commandTopic="home/kitchen/water"]
+            Type switch : window "KitchenWindow" [stateTopic="home/kitchen/window/ON", transformationPattern="", commandTopic="home/kitchen/window"]
+            Type switch : fire "KitchenFire" [stateTopic="home/kitchen/fire/ON", transformationPattern="", commandTopic="home/kitchen/fire"]
+            Type number : temp "KitchenTemp" [stateTopic="home/kitchen/temperature/ON", transformationPattern="", commandTopic="home/kitchen/temperature", unit="°C"]
+            Type switch : sprink "KitchenSprink" [stateTopic="home/kitchen/sprink/ON", transformationPattern="", commandTopic="home/kitchen/sprink"]
+            Type number : gasP "KitchenGasPerc" [stateTopic="home/kitchen/gasPerc/ON", transformationPattern="", commandTopic="home/kitchen/gasPerc", unit="‰"]
+            Type switch : door "KitchenDoor" [stateTopic="home/kitchen/door/ON", transformationPattern="", commandTopic="home/kitchen/door"]
+            Type switch : heater "KitchenHeater" [stateTopic="home/kitchen/heater/ON", transformationPattern="", commandTopic="home/kitchen/heater"]
+            Type switch : ac "KitchenAC" [stateTopic="home/kitchen/AC/ON", transformationPattern="", commandTopic="home/kitchen/AC"]
+            Type switch : presence "KitchenPresence" [stateTopic="home/kitchen/roompresence/ON", transformationPattern="", commandTopic="home/kitchen/roompresence"]
+    }       
 
     Thing topic bathroom "Bathroom" @ "Smart Home"
     {
         Channels:
-            Type switch : water "BathroomWater" [stateTopic="home/bathroom/water/ON", transformationPattern="JSONPATH:$.home.bathroom.water", commandTopic="home/bathroom/water"]
-            Type switch : window "BathroomWindow" [stateTopic="home/bathroom/window/ON", transformationPattern="JSONPATH:$.home.bathroom.window", commandTopic="home/bathroom/window"]
-            Type switch : fire "BathroomFire" [stateTopic="home/bathroom/fire/ON", transformationPattern="JSONPATH:$.home.bathroom.fire", commandTopic="home/bathroom/fire"]
-            Type number : temp "BathroomTemp" [stateTopic="home/bathroom/temperature", transformationPattern="JSONPATH:$.home.bathroom.temperature", unit="°C"]
-            Type switch : sprink "BathroomSprink" [stateTopic="home/bathroom/sprink/ON", transformationPattern="JSONPATH:$.home.bathroom.sprink", commandTopic="home/bathroom/sprink"]
+            Type switch : water "BathroomWater" [stateTopic="home/bathroom/water/ON", transformationPattern="", commandTopic="home/bathroom/water"]
+            Type switch : window "BathroomWindow" [stateTopic="home/bathroom/window/ON", transformationPattern="", commandTopic="home/bathroom/window"]
+            Type switch : fire "BathroomFire" [stateTopic="home/bathroom/fire/ON", transformationPattern="", commandTopic="home/bathroom/fire"]
+            Type number : temp "BathroomTemp" [stateTopic="home/bathroom/temperature/ON", transformationPattern="", commandTopic="home/bathroom/temperature", unit="°C"]
+            Type switch : sprink "BathroomSprink" [stateTopic="home/bathroom/sprink/ON", transformationPattern="", commandTopic="home/bathroom/sprink"]
+            Type switch : door "BathroomDoor" [stateTopic="home/bathroom/door/ON", transformationPattern="", commandTopic="home/bathroom/door"]
+            Type switch : heater "BathroomHeater" [stateTopic="home/bathroom/heater/ON", transformationPattern="", commandTopic="home/bathroom/heater"]
+            Type switch : ac "BathroomAC" [stateTopic="home/bathroom/AC/ON", transformationPattern="", commandTopic="home/bathroom/AC"]
+            Type switch : presence "BathroomPresence" [stateTopic="home/bathroom/roompresence/ON", transformationPattern="", commandTopic="home/bathroom/roompresence"]
             
     }
 
     Thing topic bedroom "Bedroom" @ "Smart Home"
     {
         Channels:
-            Type switch : window "BedroomWindow" [stateTopic="home/bedroom/window/ON", transformationPattern="JSONPATH:$.home.bedroom.window", commandTopic="home/bedroom/window"]
-            Type switch : fire "BedroomFire" [stateTopic="home/bedroom/fire/ON", transformationPattern="JSONPATH:$.home.bedroom.fire", commandTopic="home/bedroom/fire"]
-            Type number : temp "BedroomTemp" [stateTopic="home/bedroom/temperature", transformationPattern="JSONPATH:$.home.bedroom.temperature", unit="°C"]
-            Type switch : sprink "BedroomSprink" [stateTopic="home/bedroom/sprink/ON", transformationPattern="JSONPATH:$.home.bedroom.sprink", commandTopic="home/bedroom/sprink"]
-            
+            Type switch : window "BedroomWindow" [stateTopic="home/bedroom/window/ON", transformationPattern="", commandTopic="home/bedroom/window"]
+            Type switch : fire "BedroomFire" [stateTopic="home/bedroom/fire/ON", transformationPattern="", commandTopic="home/bedroom/fire"]
+            Type number : temp "BedroomTemp" [stateTopic="home/bedroom/temperature/ON", transformationPattern="", commandTopic="home/bedroom/temperature", unit="°C"]
+            Type switch : sprink "BedroomSprink" [stateTopic="home/bedroom/sprink/ON", transformationPattern="", commandTopic="home/bedroom/sprink"]
+            Type switch : door "BedroomDoor" [stateTopic="home/bedroom/door/ON", transformationPattern="", commandTopic="home/bedroom/door"]
+            Type switch : heater "BedroomHeater" [stateTopic="home/bedroom/heater/ON", transformationPattern="", commandTopic="home/bedroom/heater"]
+            Type switch : ac "BedroomAC" [stateTopic="home/bedroom/AC/ON", transformationPattern="", commandTopic="home/bedroom/AC"]
+            Type switch : presence "BedroomPresence" [stateTopic="home/bedroom/roompresence/ON", transformationPattern="", commandTopic="home/bedroom/roompresence"]      
     }
 
     Thing topic livingroom "Livingroom" @ "Smart Home"
     {
         Channels:
-            Type switch : window "LivingroomWindow" [stateTopic="home/livingroom/window/ON", transformationPattern="JSONPATH:$.home.livingroom.window", commandTopic="home/livingroom/window"]
-            Type switch : fire "LivingroomFire" [stateTopic="home/livingroom/fire/ON", transformationPattern="JSONPATH:$.home.livingroom.fire", commandTopic="home/livingroom/fire"]
-            Type number : temp "LivingroomTemp" [stateTopic="home/livingroom/temperature", transformationPattern="JSONPATH:$.home.livingroom.temperature", unit="°C"]
-            Type switch : sprink "LivingroomSprink" [stateTopic="home/livingroom/sprink/ON", transformationPattern="JSONPATH:$.home.livingroom.sprink", commandTopic="home/livingroom/sprink"]
+            Type switch : window "LivingroomWindow" [stateTopic="home/livingroom/window/ON", transformationPattern="", commandTopic="home/livingroom/window"]
+            Type switch : fire "LivingroomFire" [stateTopic="home/livingroom/fire/ON", transformationPattern="", commandTopic="home/livingroom/fire"]
+            Type number : temp "LivingroomTemp" [stateTopic="home/livingroom/temperature/ON", transformationPattern="", commandTopic="home/livingroom/temperature", unit="°C"]
+            Type switch : sprink "LivingroomSprink" [stateTopic="home/livingroom/sprink/ON", transformationPattern="", commandTopic="home/livingroom/sprink"]
+            Type switch : door "LivingroomDoor" [stateTopic="home/livingroom/door/ON", transformationPattern="", commandTopic="home/livingroom/door"]
+            Type switch : heater "LivingroomHeater" [stateTopic="home/livingroom/heater/ON", transformationPattern="", commandTopic="home/livingroom/heater"]
+            Type switch : ac "LivingroomAC" [stateTopic="home/livingroom/AC/ON", transformationPattern="", commandTopic="home/livingroom/AC"]
+            Type switch : presence "LivingroomPresence" [stateTopic="home/livingroom/roompresence/ON", transformationPattern="", commandTopic="home/livingroom/roompresence"]
+    }
+
+    Thing topic setter "Setter" @ "Smart Home"
+    {
+        Channels:
+            Type number : kdmin "Kitchen Temperature Day Min" [stateTopic="home/setter/kdmin/ON", transformationPattern="", commandTopic="home/setter/kdmin", unit="°C"]
+            Type number : kdmax "Kitchen Temperature Day Max" [stateTopic="home/setter/kdmax/ON", transformationPattern="", commandTopic="home/setter/kdmax", unit="°C"]
+            Type number : knmin "Kitchen Temperature Night Min" [stateTopic="home/setter/knmin/ON", transformationPattern="", commandTopic="home/setter/knmin", unit="°C"]
+            Type number : knmax "Kitchen Temperature Night Max" [stateTopic="home/setter/knmax/ON", transformationPattern="", commandTopic="home/setter/knmax", unit="°C"]
+
+            Type number : ldmin "Livingroom Temperature Day Min" [stateTopic="home/setter/ldmin/ON", transformationPattern="", commandTopic="home/setter/ldmin", unit="°C"]
+            Type number : ldmax "Livingroom Temperature Day Max" [stateTopic="home/setter/ldmax/ON", transformationPattern="", commandTopic="home/setter/ldmax", unit="°C"]
+            Type number : lnmin "Livingroom Temperature Night Min" [stateTopic="home/setter/lnmin/ON", transformationPattern="", commandTopic="home/setter/lnmin", unit="°C"]
+            Type number : lnmax "Livingroom Temperature Night Max" [stateTopic="home/setter/lnmax/ON", transformationPattern="", commandTopic="home/setter/lnmax", unit="°C"]
+
+            Type number : bdmin "Bedroom Temperature Day Min" [stateTopic="home/setter/bdmin/ON", transformationPattern="", commandTopic="home/setter/bdmin", unit="°C"]
+            Type number : bdmax "Bedroom Temperature Day Max" [stateTopic="home/setter/bdmax/ON", transformationPattern="", commandTopic="home/setter/bdmax", unit="°C"]
+            Type number : bnmin "Bedroom Temperature Night Min" [stateTopic="home/setter/bnmin/ON", transformationPattern="", commandTopic="home/setter/bnmin", unit="°C"]
+            Type number : bnmax "Bedroom Temperature Night Max" [stateTopic="home/setter/bnmax/ON", transformationPattern="", commandTopic="home/setter/bnmax", unit="°C"]
+
+            Type number : btdmin "Bathroom Temperature Day Min" [stateTopic="home/setter/btdmin/ON", transformationPattern="", commandTopic="home/setter/btdmin", unit="°C"]
+            Type number : btdmax "Bathroom Temperature Day Max" [stateTopic="home/setter/btdmax/ON", transformationPattern="", commandTopic="home/setter/btdmax", unit="°C"]
+            Type number : btnmin "Bathroom Temperature Night Min" [stateTopic="home/setter/btnmin/ON", transformationPattern="", commandTopic="home/setter/btnmin", unit="°C"]
+            Type number : btnmax "Bathroom Temperature Night Max" [stateTopic="home/setter/btnmax/ON", transformationPattern="", commandTopic="home/setter/btnmax", unit="°C"]
+
+            Type number : gastime "Timer for gas stop" [stateTopic="home/setter/gastime/ON", transformationPattern="", commandTopic="home/setter/gastime", unit=" min"]
+            Type number : waterTime "Timer for water stop" [stateTopic="home/setter/watertime/ON", transformationPattern="", commandTopic="home/setter/watertime", unit=" min"]
+
+
+            
+            Type switch : savemode "Timer for gas stop" [stateTopic="home/setter/savemode/ON", transformationPattern="", commandTopic="home/setter/savemode"]
+            Type switch : importmode "Timer for water stop" [stateTopic="home/setter/importmode/ON", transformationPattern="", commandTopic="home/setter/importmode"]
+
+
+    }
+
+    Thing topic presence "Presence" @ "Smart Home"
+    {
+        Channels:
+
+            Type switch : prmode "Presence Mode Activator"  [stateTopic="home/presence/mode/ON", transformationPattern="", commandTopic="home/presence/mode"]
+
+            Type number : kmin "Kitchen Temperature Presence Min" [stateTopic="home/presence/kmin/ON", transformationPattern="", commandTopic="home/presence/kmin", unit="°C"]
+            Type number : kmax "Kitchen Temperature Presence Max" [stateTopic="home/presence/kmax/ON", transformationPattern="", commandTopic="home/presence/kmax", unit="°C"]
+
+            Type number : lmin "Livingroom Temperature Presence Min" [stateTopic="home/presence/lmin/ON", transformationPattern="", commandTopic="home/presence/lmin", unit="°C"]
+            Type number : lmax "Livingroom Temperature Presence Max" [stateTopic="home/presence/lmax/ON", transformationPattern="", commandTopic="home/presence/lmax", unit="°C"]
+           
+            Type number : bmin "Bedroom Temperature Presence Min" [stateTopic="home/presence/bmin/ON", transformationPattern="", commandTopic="home/presence/bmin", unit="°C"]
+            Type number : bmax "Bedroom Temperature Presence Max" [stateTopic="home/presence/bmax/ON", transformationPattern="", commandTopic="home/presence/bmax", unit="°C"]
+            
+            Type number : btmin "Bathroom Temperature Presence Min" [stateTopic="home/presence/btmin/ON", transformationPattern="", commandTopic="home/presence/btmin", unit="°C"]
+            Type number : btmax "Bathroom Temperature Presence Max" [stateTopic="home/presence/btmax/ON", transformationPattern="", commandTopic="home/presence/btmax", unit="°C"]
             
     }
 }

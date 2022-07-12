@@ -4,6 +4,7 @@ public class Analyzer {
 	SensorValues db = new SensorValues();
 	Planner planner = new Planner();
 	Utils u = new Utils();
+	float preValue= 0 ;
 	
 	public void GasSensorArrived() {
 		planner.gasSignalArrived();
@@ -26,8 +27,13 @@ public class Analyzer {
 		planner.sprinklerSignalArrived(room);
 	}
 	
-	public void WaterSensorArrived(String room) {
-		planner.waterSignalArrived(room);
+	public void WaterSensorArrived(String room, String state) {
+		if(state=="normal")
+			planner.waterSignalArrived(room);
+		else {
+			planner.waterDetectionArrived(room,state);
+		//System.out.println(state);
+		}
 	}
 	
 	public void PresenceSensorArrived(String room) {
@@ -75,7 +81,18 @@ public class Analyzer {
 				
 				case "water": {
 					db.updateKitchenWaterSensorValue(Integer.parseInt(msg));
-					this.WaterSensorArrived(room);
+					this.WaterSensorArrived(room,"normal");
+					break;
+				}
+				
+				case "waterDetector": {
+					this.preValue = SensorValues.kitchen_water_detected_value;
+					db.updateKitchenWaterDetectedValue(Float.parseFloat(msg));
+					if(SensorValues.kitchen_water_detected_value > this.preValue && this.preValue > 0)
+						this.WaterSensorArrived(room,"procedure");
+					else {
+						this.WaterSensorArrived(room,"detection");
+					}
 					break;
 				}
 				
@@ -142,7 +159,18 @@ public class Analyzer {
 				
 				case "water": {
 					db.updateBathroomWaterSensorValue(Integer.parseInt(msg));
-					planner.waterSignalArrived(room);
+					this.WaterSensorArrived(room,"normal");
+					break;
+				}
+				
+				case "waterDetector": {
+					this.preValue = SensorValues.bathroom_water_detected_value;
+					db.updateBathroomWaterDetectedValue(Float.parseFloat(msg));
+					if(SensorValues.bathroom_water_detected_value > this.preValue && this.preValue > 0)
+						this.WaterSensorArrived(room,"procedure");
+					else {
+						this.WaterSensorArrived(room,"detection");
+					}
 					break;
 				}
 				

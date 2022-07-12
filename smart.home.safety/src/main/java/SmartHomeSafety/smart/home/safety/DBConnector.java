@@ -79,7 +79,7 @@ import java.util.Date;
             // Statements allow to issue SQL queries to the database
             statement = connect.createStatement();
 	    	resultSet = statement
-                    .executeQuery("select * from seas.values");
+                    .executeQuery("select * from seas.values ORDER BY id DESC LIMIT 1");
 	    	
 	        while (resultSet.next()) {
 	            SensorValues.kitchen_day_min_value = resultSet.getFloat("kdmin");

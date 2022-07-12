@@ -38,9 +38,12 @@ public enum MqttTopic {
 	//KITCHEN_GASKNOB("home/kitchen/gasknob"),
 	
 	KITCHEN_WATER_ON("home/kitchen/water/ON"),
+	KITCHEN_WATER_DETECTION("home/kitchen/waterDetector/ON"),
 	//KITCHEN_WATER("home/kitchen/water"),
 	BATHROOM_WATER_ON("home/bathroom/water/ON"),
+	BATHROOM_WATER_DETECTION("home/bathroom/waterDetector/ON"),
 	//BATHROOM_WATER("home/bathroom/water"),
+	HOME_WATER_PIPE("home/setter/waterpipe/ON"),
 
 	KITCHEN_DOOR_ON("home/kitchen/door/ON"),
 	BEDROOM_DOOR_ON("home/bedroom/door/ON"),

@@ -29,6 +29,10 @@ public class Executer {
 	public void closeWaterTaps(String room) {
 		publishData("home/"+room+"/water/ON", "0");
 	}
+	
+	public void closeWaterPipe() {
+		publishData(MqttTopic.HOME_WATER_PIPE.getTopic(), "0");
+	}
 
 	public void stopFire(String room) {
 		publishData("home/"+room+"/fire/ON", "0");
@@ -89,5 +93,7 @@ public class Executer {
 		}
 		publishData("home/setter/savemode/ON", "0");
 	}
+
+	
 	
 }

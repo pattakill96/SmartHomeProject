@@ -396,7 +396,7 @@ public class Planner{
 									break;
 								}
 								}
-								if (value1==1)
+								if (value1==1 && SensorValues.home_water_pipe==1)
 									executer.closeWaterTaps(room);
 					    	} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
@@ -404,6 +404,8 @@ public class Planner{
 							}			    }
 					}).start();
 		}
+
+	
 					
 	public void gasSignalArrived() {
 		new Thread(new Runnable() {
@@ -480,6 +482,15 @@ public class Planner{
 		}).start();
 		}
 
+		public void waterDetectionArrived(String room, String state) {
+			if(state=="detection")
+				executer.closeWaterTaps(room);
+			else {
+				executer.closeWaterPipe();
+			}
+			
+		}
+	
 		public void doorSignalArrived(String room) {	
 		}
 	
@@ -514,5 +525,7 @@ public class Planner{
 			executer.savedatafromDB();
 			
 		}
+
+		
 }
 

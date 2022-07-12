@@ -31,11 +31,16 @@ public class Populator {
 		}
 		
 		for (MqttTopic topic : MqttTopic.values()) {
-			if(topic.getTopic().contains("door")) {
+			if(topic.getTopic().contains("door") || topic.getTopic().contains("pipe")) {
 				u.publishData(topic.getTopic(),"1");
 			}
 			else {
+			if(topic.getTopic().contains("Detector"))
+				u.publishData(topic.getTopic(),"0.0");
+			else {
+
 				u.publishData(topic.getTopic(),"0");
+			}
 			}
 		
 		}
@@ -59,7 +64,6 @@ public class Populator {
 		u.publishRawData(MqttTopicTempSetter.BATHROOM_TEMP_DAY_MAX.getTopic(),SensorValues.bathroom_day_max_value);
 		u.publishRawData(MqttTopicTempSetter.BATHROOM_TEMP_NIGHT_MIN.getTopic(),SensorValues.bathroom_night_min_value);
 		u.publishRawData(MqttTopicTempSetter.BATHROOM_TEMP_NIGHT_MAX.getTopic(),SensorValues.bathroom_night_max_value);
-		
 		u.publishRawData(MqttTopicTempSetter.KITCHEN_TEMP_PRESENCE_MIN.getTopic(),SensorValues.kitchen_presence_min_value);
 		u.publishRawData(MqttTopicTempSetter.KITCHEN_TEMP_PRESENCE_MIN.getTopic(),SensorValues.kitchen_presence_max_value);
 		u.publishRawData(MqttTopicTempSetter.LIVINGROOM_TEMP_PRESENCE_MIN.getTopic(),SensorValues.kitchen_presence_min_value);

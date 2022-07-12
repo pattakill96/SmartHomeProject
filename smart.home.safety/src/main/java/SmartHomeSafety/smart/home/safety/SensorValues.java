@@ -27,7 +27,9 @@ public class SensorValues {
 	public static float bathroom_temp_sensor_value=18;
 	
 	public static int kitchen_water_sensor_value=0;
+	public static float kitchen_water_detected_value=0;
 	public static int bathroom_water_sensor_value=0;
+	public static float bathroom_water_detected_value=0;
 
 	
 	public static int kitchen_window_sensor_value=0;
@@ -89,6 +91,7 @@ public class SensorValues {
 	public static float livingroom_presence_max_value=20;
 	
 	public static int presence_mode=0;
+	public static int home_water_pipe=1;
 	
 	public void updateGasSensorValue (int state) {
 		gas_sensor_value = state;
@@ -192,6 +195,14 @@ public class SensorValues {
 	
 	public void updateBathroomWaterSensorValue (int state) {
 		bathroom_water_sensor_value = state;
+	}
+	
+	public void updateKitchenWaterDetectedValue (float value) {
+		kitchen_water_detected_value = value;
+	}
+	
+	public void updateBathroomWaterDetectedValue (float value) {
+		bathroom_water_detected_value = value;
 	}
 
 	public void updateBathroomSprinkSensorValue(int state) {
@@ -364,6 +375,10 @@ public class SensorValues {
 
 	public void updatePresenceMode(int value) {
 		presence_mode=value;
+	}
+	
+	public void updateHomeWaterPipe(int value) {
+		home_water_pipe=value;
 	}
 	
 

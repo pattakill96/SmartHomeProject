@@ -3,40 +3,37 @@ package SmartHomeSafety.smart.home.safety;
 public class Analyzer {
 	SensorValues db = new SensorValues();
 	Planner planner = new Planner();
-	Utils u = new Utils();
 	float preValue= 0 ;
 	
-	public void GasSensorArrived() {
+	private void GasSensorArrived() {
 		planner.gasSignalArrived();
 	}
 	
-	public void GasSensorPercArrived() {
-		planner.gasSignalPercArrived();
-		
-	}
+	//private void GasSensorPercArrived() {
+	//	planner.gasSignalPercArrived();
+	//}
 	
-	public void FireSensorArrived(String room) {
+	private void FireSensorArrived(String room) {
 		planner.fireSignalArrived(room);
 	}
 	
-	public void WindowSensorArrived(String room) {
+	private void WindowSensorArrived(String room) {
 		planner.windowSignalArrived(room);
 	}
 	
-	public void SprinklerSensorArrived(String room) {
+	private void SprinklerSensorArrived(String room) {
 		planner.sprinklerSignalArrived(room);
 	}
 	
-	public void WaterSensorArrived(String room, String state) {
+	private void WaterSensorArrived(String room, String state) {
 		if(state=="normal")
 			planner.waterSignalArrived(room);
 		else {
 			planner.waterDetectionArrived(room,state);
-		//System.out.println(state);
 		}
 	}
 	
-	public void PresenceSensorArrived(String room) {
+	private void PresenceSensorArrived(String room) {
 		planner.presenceSignalArrived(room);
 	}
 
@@ -57,7 +54,7 @@ public class Analyzer {
 		
 	}
 	
-	private void tempSensorActivated(String room, Boolean out) {
+	private void TempSensorArrived(String room, Boolean out) {
 		if(!out)
 			planner.tempSignalArrived(room);
 	}
@@ -69,7 +66,7 @@ public class Analyzer {
 				
 				case "temperature": {
 					db.updateKitchenTemperatureSensorValue(Float.parseFloat(msg));
-					this.tempSensorActivated(room, out);
+					this.TempSensorArrived(room, out);
 					break;
 				}
 				
@@ -153,7 +150,7 @@ public class Analyzer {
 				
 				case "temperature": {
 					db.updateBathroomTemperatureSensorValue(Float.parseFloat(msg));
-					this.tempSensorActivated(room, out);
+					this.TempSensorArrived(room, out);
 					break;
 				}
 				
@@ -225,7 +222,7 @@ public class Analyzer {
 				
 				case "temperature": {
 					db.updatebedroomTemperatureSensorValue(Float.parseFloat(msg));
-					this.tempSensorActivated(room, out);
+					this.TempSensorArrived(room, out);
 					break;
 				}
 				
@@ -280,7 +277,7 @@ public class Analyzer {
 				
 				case "temperature": {
 					db.updatelivingroomTemperatureSensorValue(Float.parseFloat(msg));
-					this.tempSensorActivated(room, out);
+					this.TempSensorArrived(room, out);
 					break;
 				}
 				
@@ -343,82 +340,82 @@ public class Analyzer {
 				
 				case "kdmin":{
 					db.updateKitchenDayMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("kitchen", out);
+					this.TempSensorArrived("kitchen", out);
 					break;
 				}
 				case "kdmax":{
 					db.updateKitchenDayMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("kitchen", out);
+					this.TempSensorArrived("kitchen", out);
 					break;
 				}
 				case "knmin":{
 					db.updateKitchenNightMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("kitchen", out);
+					this.TempSensorArrived("kitchen", out);
 					break;
 				}
 				case "knmax":{
 					db.updateKitchenNightMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("kitchen", out);
+					this.TempSensorArrived("kitchen", out);
 					break;
 				}
 				case "ldmin":{
 					db.updateLivingroomDayMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("livingroom", out);
+					this.TempSensorArrived("livingroom", out);
 					break;
 				}
 				case "ldmax":{
 					db.updateLivingroomDayMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("livingroom", out);
+					this.TempSensorArrived("livingroom", out);
 					break;
 				}
 				case "lnmin":{
 					db.updateLivingroomNightMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("livingroom", out);
+					this.TempSensorArrived("livingroom", out);
 					break;
 				}
 				case "lnmax":{
 					db.updateLivingroomNightMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("livingroom", out);
+					this.TempSensorArrived("livingroom", out);
 					break;
 				}
 				case "bdmin":{
 					db.updateBedroomDayMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bedroom", out);
+					this.TempSensorArrived("bedroom", out);
 					break;
 				}
 				case "bdmax":{
 					db.updateBedroomDayMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bedroom", out);
+					this.TempSensorArrived("bedroom", out);
 					break;
 				}
 				case "bnmin":{
 					db.updateBedroomNightMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bedroom", out);
+					this.TempSensorArrived("bedroom", out);
 					break;
 				}
 				case "bnmax":{
 					db.updateBedroomNightMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bedroom", out);
+					this.TempSensorArrived("bedroom", out);
 					break;
 				}
 				case "btdmin":{
 					db.updateBathroomDayMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bathroom", out);
+					this.TempSensorArrived("bathroom", out);
 					break;
 				}
 				case "btdmax":{
 					db.updateBathroomDayMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bathroom", out);
+					this.TempSensorArrived("bathroom", out);
 					break;
 				}
 				case "btnmin":{
 					db.updateBathroomNightMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bathroom", out);
+					this.TempSensorArrived("bathroom", out);
 					break;
 				}
 				case "btnmax":{
 					db.updateBathroomNightMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bathroom", out);
+					this.TempSensorArrived("bathroom", out);
 					break;
 				}
 				case "importmode":{
@@ -441,47 +438,47 @@ public class Analyzer {
 				 
 				case "mode":{
 					db.updatePresenceMode(Integer.parseInt(msg));
-					planner.presenceModeArrived("all");;
+					planner.presenceModeArrived();;
 					break;
 				}
 				case "kmin":{
 					db.updateKitchenPresenceMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("kitchen", out);
+					this.TempSensorArrived("kitchen", out);
 					break;
 				}
 				case "kmax":{
 					db.updateKitchenPresenceMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("kitchen", out);
+					this.TempSensorArrived("kitchen", out);
 					break;
 				}
 				case "lmin":{
 					db.updateLivingroomPresenceMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("livingroom", out);
+					this.TempSensorArrived("livingroom", out);
 					break;
 				}
 				case "lmax":{
 					db.updateLivingroomPresenceMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("livingroom", out);
+					this.TempSensorArrived("livingroom", out);
 					break;
 				}
 				case "bmin":{
 					db.updateBedroomPresenceMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bedroom", out);
+					this.TempSensorArrived("bedroom", out);
 					break;
 				}
 				case "bmax":{
 					db.updateBedroomPresenceMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bedroom", out);
+					this.TempSensorArrived("bedroom", out);
 					break;
 				}
 				case "btmin":{
 					db.updateBathroomPresenceMinValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bathroom", out);
+					this.TempSensorArrived("bathroom", out);
 					break;
 				}
 				case "btmax":{
 					db.updateBathroomPresenceMaxValue(Float.parseFloat(msg));
-					this.tempSensorActivated("bathroom", out);
+					this.TempSensorArrived("bathroom", out);
 					break;
 				}
 				

@@ -1,13 +1,26 @@
 package SmartHomeSafety.smart.home.safety;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Planner{
 
 	Executer executer = new Executer(); 
 
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH");
+	LocalDateTime now = LocalDateTime.now();
+	
+	private String dayShift() {
+		LocalDateTime now = LocalDateTime.now();
+		if(Integer.parseInt(now.format(dtf))>7 && Integer.parseInt(now.format(dtf))<21) {
+			return "day";
+		}
+		else {
+			return "night";
+		}
+	}
 
 	public void tempSignalArrived(String room) {
-		
-		Utils t = new Utils();
 		switch(room) {
 			case "kitchen" : {
 					if(SensorValues.kitchen_presence_value==1 && SensorValues.presence_mode==1) {
@@ -35,7 +48,7 @@ public class Planner{
 						}
 					}
 					else {
-						switch(t.dayShift()) {
+						switch(this.dayShift()) {
 							case("day"):{
 								//System.out.println("TEMP:"+SensorValues.kitchen_temp_sensor_value+"\nMIN:"+SensorValues.kitchen_day_min_value+"\nMAX:"+SensorValues.kitchen_day_max_value);
 								if(SensorValues.kitchen_temp_sensor_value > SensorValues.kitchen_day_max_value) {
@@ -118,7 +131,7 @@ public class Planner{
 					}
 				}
 				else {
-					switch(t.dayShift()) {
+					switch(this.dayShift()) {
 						case("day"):{
 							if(SensorValues.livingroom_temp_sensor_value > SensorValues.livingroom_day_max_value) {
 								if(SensorValues.livingroom_ac_sensor_value==0)
@@ -200,7 +213,7 @@ public class Planner{
 					}
 				}
 				else {
-					switch(t.dayShift()) {
+					switch(this.dayShift()) {
 						case("day"):{
 							if(SensorValues.bedroom_temp_sensor_value > SensorValues.bedroom_day_max_value) {
 								if(SensorValues.bedroom_ac_sensor_value==0)
@@ -282,7 +295,7 @@ public class Planner{
 					}
 				}
 				else {
-					switch(t.dayShift()) {
+					switch(this.dayShift()) {
 						case("day"):{
 							if(SensorValues.bathroom_temp_sensor_value > SensorValues.bathroom_day_max_value) {
 								if(SensorValues.bathroom_ac_sensor_value==0)
@@ -509,7 +522,7 @@ public class Planner{
 			this.tempSignalArrived(room);
 		}
 		
-		public void presenceModeArrived(String room) {
+		public void presenceModeArrived() {
 			this.tempSignalArrived("kitchen");
 			this.tempSignalArrived("livingroom");
 			this.tempSignalArrived("bedroom");
@@ -517,12 +530,12 @@ public class Planner{
 		}
 
 		public void importdata() {
-			executer.importdatafromDB();
+			executer.importfromDB();
 			
 		}
 
 		public void savedata() {
-			executer.savedatafromDB();
+			executer.saveinDB();
 			
 		}
 

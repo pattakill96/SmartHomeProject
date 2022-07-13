@@ -2,9 +2,6 @@ package SmartHomeSafety.smart.home.safety;
 
 public class Executer {
 	
-	int windowflag = 0;
-	SensorValues obj = new SensorValues();
-	
 	
 	public void openWindow (String room) {
 		publishData("home/"+room+"/window/ON", "1");
@@ -58,7 +55,7 @@ public class Executer {
 		publishData("home/"+room+"/door/ON", "0");
 	}
 	
-	public void publishData(String topic, String message) {
+	private void publishData(String topic, String message) {
 		MQTTBroker conn = null;
 		try {
 			conn = new MQTTBroker();
@@ -69,31 +66,55 @@ public class Executer {
 
 	}
 
-	public void importdatafromDB() {
+	public void importfromDB() {
 		DBConnector d = new DBConnector();
 		try {
 		d.getData();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		Populator p = new Populator();
-		p.updateTempSettings();
-		publishData("home/setter/importmode/ON", "0");
+		this.updateTempSettings();
+		this.publishData("home/setter/importmode/ON", "0");
 	}
 		
 	
 
-	public void savedatafromDB() {
+	public void saveinDB() {
 		DBConnector d = new DBConnector();
 		try {
 		d.saveData();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		publishData("home/setter/savemode/ON", "0");
+		this.publishData("home/setter/savemode/ON", "0");
 	}
 
-	
+	private void updateTempSettings() {
+		this.publishData(MqttTopicTempSetter.KITCHEN_TEMP_DAY_MIN.getTopic(),String.valueOf(SensorValues.kitchen_day_min_value));
+		this.publishData(MqttTopicTempSetter.KITCHEN_TEMP_DAY_MAX.getTopic(),String.valueOf(SensorValues.kitchen_day_max_value));
+		this.publishData(MqttTopicTempSetter.KITCHEN_TEMP_NIGHT_MIN.getTopic(),String.valueOf(SensorValues.kitchen_night_min_value));
+		this.publishData(MqttTopicTempSetter.KITCHEN_TEMP_NIGHT_MAX.getTopic(),String.valueOf(SensorValues.kitchen_night_max_value));
+		this.publishData(MqttTopicTempSetter.LIVINGROOM_TEMP_DAY_MIN.getTopic(),String.valueOf(SensorValues.livingroom_day_min_value));
+		this.publishData(MqttTopicTempSetter.LIVINGROOM_TEMP_DAY_MAX.getTopic(),String.valueOf(SensorValues.livingroom_day_max_value));
+		this.publishData(MqttTopicTempSetter.LIVINGROOM_TEMP_NIGHT_MIN.getTopic(),String.valueOf(SensorValues.livingroom_night_min_value));
+		this.publishData(MqttTopicTempSetter.LIVINGROOM_TEMP_NIGHT_MAX.getTopic(),String.valueOf(SensorValues.livingroom_night_max_value));
+		this.publishData(MqttTopicTempSetter.BEDROOM_TEMP_DAY_MIN.getTopic(),String.valueOf(SensorValues.bedroom_day_min_value));
+		this.publishData(MqttTopicTempSetter.BEDROOM_TEMP_DAY_MAX.getTopic(),String.valueOf(SensorValues.bedroom_day_max_value));
+		this.publishData(MqttTopicTempSetter.BEDROOM_TEMP_NIGHT_MIN.getTopic(),String.valueOf(SensorValues.bedroom_night_min_value));
+		this.publishData(MqttTopicTempSetter.BEDROOM_TEMP_NIGHT_MAX.getTopic(),String.valueOf(SensorValues.bedroom_night_max_value));
+		this.publishData(MqttTopicTempSetter.BATHROOM_TEMP_DAY_MIN.getTopic(),String.valueOf(SensorValues.bathroom_day_min_value));
+		this.publishData(MqttTopicTempSetter.BATHROOM_TEMP_DAY_MAX.getTopic(),String.valueOf(SensorValues.bathroom_day_max_value));
+		this.publishData(MqttTopicTempSetter.BATHROOM_TEMP_NIGHT_MIN.getTopic(),String.valueOf(SensorValues.bathroom_night_min_value));
+		this.publishData(MqttTopicTempSetter.BATHROOM_TEMP_NIGHT_MAX.getTopic(),String.valueOf(SensorValues.bathroom_night_max_value));
+		this.publishData(MqttTopicTempSetter.KITCHEN_TEMP_PRESENCE_MIN.getTopic(),String.valueOf(SensorValues.kitchen_presence_min_value));
+		this.publishData(MqttTopicTempSetter.KITCHEN_TEMP_PRESENCE_MIN.getTopic(),String.valueOf(SensorValues.kitchen_presence_max_value));
+		this.publishData(MqttTopicTempSetter.LIVINGROOM_TEMP_PRESENCE_MIN.getTopic(),String.valueOf(SensorValues.kitchen_presence_min_value));
+		this.publishData(MqttTopicTempSetter.LIVINGROOM_TEMP_PRESENCE_MIN.getTopic(),String.valueOf(SensorValues.kitchen_presence_max_value));
+		this.publishData(MqttTopicTempSetter.BEDROOM_TEMP_PRESENCE_MIN.getTopic(),String.valueOf(SensorValues.kitchen_presence_min_value));
+		this.publishData(MqttTopicTempSetter.BEDROOM_TEMP_PRESENCE_MIN.getTopic(),String.valueOf(SensorValues.kitchen_presence_min_value));
+		this.publishData(MqttTopicTempSetter.BATHROOM_TEMP_PRESENCE_MIN.getTopic(),String.valueOf(SensorValues.kitchen_presence_min_value));
+		this.publishData(MqttTopicTempSetter.BATHROOM_TEMP_PRESENCE_MIN.getTopic(),String.valueOf(SensorValues.kitchen_presence_min_value));
+		
+	}
 	
 }

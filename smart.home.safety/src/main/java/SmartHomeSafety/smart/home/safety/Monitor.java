@@ -1,7 +1,6 @@
 package SmartHomeSafety.smart.home.safety;
 
 import org.eclipse.paho.client.mqttv3.*;
-import com.google.gson.*;
 import java.lang.String;
 import java.text.SimpleDateFormat;
 import java.util.Date;

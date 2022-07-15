@@ -9,9 +9,9 @@ public class Analyzer {
 		planner.gasSignalArrived();
 	}
 	
-	//private void GasSensorPercArrived() {
-	//	planner.gasSignalPercArrived();
-	//}
+	private void GasSensorPercArrived() {
+		planner.gasSignalPercArrived();
+	}
 	
 	private void FireSensorArrived(String room) {
 		planner.fireSignalArrived(room);
@@ -72,7 +72,7 @@ public class Analyzer {
 				
 				case "gasPerc": {
 					db.updateGasSensorPercValue(Float.parseFloat(msg));
-					this.GasSensorArrived();
+					this.GasSensorPercArrived();
 					break;
 				}
 				
